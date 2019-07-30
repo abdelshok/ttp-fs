@@ -13,7 +13,8 @@ import styled from 'styled-components';
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Auth } from "aws-amplify";
+import { Auth } from 'aws-amplify';
+import axios from 'axios';
 // App Components
 import store from '../store/store';
 // POSSIBLY REMOVE THIS LOADER BUTTON
@@ -30,10 +31,18 @@ import BoxTitleText from '../styledComponents/BoxTitleText';
 import InputFieldLogo from '../styledComponents/InputFieldLogo';
 import InputFieldAndIcon from '../styledComponents/InputFieldAndIcon';
 import FullstackTheme from '../styledComponents/FullstackTheme';
+// Environment Variables 
+import config from '../config';
+
+// For generation of a secure Cryptographic key
+// External NPM Package
+const cryptoRandomString = require('crypto-random-string');
 // Assets
 const EmailIcon = require('../assets/icons/emailIcon.svg');
 const LockIcon = require('../assets/icons/lockIcon.svg');
 const ProfileIcon = require('../assets/icons/outline-person.svg');
+
+
 
 // Div block that centers the Links/Text at the end of the Signup Container
 const SmallCenteredDiv = styled(CenteredDiv)`
@@ -81,7 +90,7 @@ class Signup extends Component {
     event.preventDefault();
 
     // If email is correct and password match, dispatch to store, and 
-    // beging authentication
+    // begin authentication
     if (this.validateForm()) {
       console.log('Passwords match');
       try {
@@ -95,8 +104,10 @@ class Signup extends Component {
         // to the state and finally change the authentication status of the user from false
         // to true by first dispatching the action to the reducer and then fetching the 
         // authenticated state from the store.
+        const userEmail = store.getState().email;
+
         const newUser = await Auth.signUp({
-          username: store.getState().email,
+          username: userEmail,
           password: store.getState().password,
         });
 
@@ -105,9 +116,39 @@ class Signup extends Component {
           newUser: newUser,
           userSignedUp: true
         });
-        console.log("New user", this.state.newUser);
-        console.log("Is the state updated", this.state.userSignedUp);
-        console.log("User signed up. Next step in verification incoming.");
+
+        console.log('New user', this.state.newUser);
+        console.log('Is the state updated', this.state.userSignedUp);
+        console.log('User signed up. Next step in verification incoming.');
+        
+        const newUserId = cryptoRandomString({ length: 10, type: 'base64' });
+
+        const bodyParameters = {
+          user_id: newUserId,
+          email: userEmail,
+          // eslint-disable-next-line react/destructuring-assignment
+          name: this.state.name
+        };
+
+        axios.put(
+          config.gateway.ADDUSER_LINK,
+          bodyParameters,
+          {
+            Auth: {
+              accessKey: config.gateway.ADDUSER_ACCESS_KEY,
+              secretKey: config.gateway.ADDUSER_SECRET_KEY,
+              region: config.gateway.ADDUSER_REGION,
+              serviceName: config.gateway.SERVICE_NAME
+            }
+          }
+        ).then(function response() {
+          console.log('Request to add user made to the DB.');
+        }).catch(function error() {
+          console.log('Error. User not added to DB.');
+        }).finally(function() {
+          console.log('AXIOS request about to be exited successfully.')
+        });
+
       } catch (err) {
         alert(err.message); // eslint-disable-line
       }
