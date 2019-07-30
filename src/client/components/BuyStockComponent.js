@@ -12,7 +12,7 @@ import NormalText from '../styledComponents/NormalText';
 import CenteredDiv from '../styledComponents/CenteredDiv';
 import BoxTitleText from '../styledComponents/BoxTitleText';
 import InputFieldLogo from '../styledComponents/InputFieldLogo';
-import InputFieldAndIcon from '../styledComponents/InputFieldAndIcon';
+import InputFieldAndIconContainer from '../styledComponents/InputFieldAndIconContainer';
 import FullstackTheme from '../styledComponents/FullstackTheme';
 
 const SpecialBox = styled(Box)`
@@ -63,7 +63,7 @@ class BuyStockComponent extends Component {
             {''}
           </BoxTitleText>
           <form onSubmit={this.handleSubmit} value>
-            <InputFieldAndIcon FullstackTheme={FullstackTheme}>
+            <InputFieldAndIconContainer FullstackTheme={FullstackTheme}>
               <InputField
                 type="text"
                 value={this.state.stockTicket.toUpperCase()}
@@ -72,10 +72,10 @@ class BuyStockComponent extends Component {
                 onChange={this.handleChange}
                 FullstackTheme={FullstackTheme}
               />
-            </InputFieldAndIcon>
+            </InputFieldAndIconContainer>
             {/* EmailFieldComponent would replace the above piece of code */}
 
-            <InputFieldAndIcon FullstackTheme={FullstackTheme}>
+            <InputFieldAndIconContainer FullstackTheme={FullstackTheme}>
               <InputField
                 type="number"
                 value={Math.abs(Math.floor(this.state.quantity))}
@@ -84,7 +84,7 @@ class BuyStockComponent extends Component {
                 onChange={this.handleChange}
                 FullstackTheme={FullstackTheme}
               />
-            </InputFieldAndIcon>
+            </InputFieldAndIconContainer>
 
 
             <PurchaseBox

@@ -29,7 +29,8 @@ import NormalText from '../styledComponents/NormalText';
 import CenteredDiv from '../styledComponents/CenteredDiv';
 import BoxTitleText from '../styledComponents/BoxTitleText';
 import InputFieldLogo from '../styledComponents/InputFieldLogo';
-import InputFieldAndIcon from '../styledComponents/InputFieldAndIcon';
+import InputFieldContainer from '../styledComponents/InputFieldContainer'
+import InputFieldAndIconContainer from '../styledComponents/InputFieldAndIconContainer';
 import FullstackTheme from '../styledComponents/FullstackTheme';
 // Environment Variables 
 import config from '../config';
@@ -224,17 +225,19 @@ class Signup extends Component {
 
           <form onSubmit={this.handleConfirmationSubmit} value>
 
-          <InputFieldAndIcon FullstackTheme={FullstackTheme}>
-            <InputFieldLogo src={LockIcon} />
-            <InputField
-              type="text"
-              value={this.state.confirmationCode}
-              placeholder="Confirmation Code"
-              id="confirmationCode"
-              onChange={this.handleChange}
-              FullstackTheme={FullstackTheme}
-            />
-          </InputFieldAndIcon>
+          <InputFieldAndIconContainer FullstackTheme={FullstackTheme}>
+            <InputFieldContainer>
+              <InputFieldLogo src={LockIcon} />
+              <InputField
+                type="text"
+                value={this.state.confirmationCode}
+                placeholder="Confirmation Code"
+                id="confirmationCode"
+                onChange={this.handleChange}
+                FullstackTheme={FullstackTheme}
+              />
+            </InputFieldContainer>
+          </InputFieldAndIconContainer>
 
           <SignUpButton
             type="submit"
@@ -260,7 +263,7 @@ class Signup extends Component {
             {''}
           </BoxTitleText>
           <form onSubmit={this.handleSubmit} value>
-          <InputFieldAndIcon FullstackTheme={FullstackTheme}>
+          <InputFieldAndIconContainer FullstackTheme={FullstackTheme}>
 
               <InputFieldLogo src={ProfileIcon} />
               <InputField
@@ -271,9 +274,9 @@ class Signup extends Component {
                 onChange={this.handleChange}
                 FullstackTheme={FullstackTheme}
               />
-            </InputFieldAndIcon>
+            </InputFieldAndIconContainer>
 
-            <InputFieldAndIcon FullstackTheme={FullstackTheme}>
+            <InputFieldAndIconContainer FullstackTheme={FullstackTheme}>
               <InputFieldLogo src={EmailIcon} />
               <InputField
                 type="email"
@@ -283,10 +286,10 @@ class Signup extends Component {
                 onChange={this.handleChange}
                 FullstackTheme={FullstackTheme}
               />
-            </InputFieldAndIcon>
+            </InputFieldAndIconContainer>
             {/* EmailFieldComponent would replace the above piece of code */}
 
-            <InputFieldAndIcon FullstackTheme={FullstackTheme}>
+            <InputFieldAndIconContainer FullstackTheme={FullstackTheme}>
               <InputFieldLogo src={LockIcon} />
               <InputField
                 type="password"
@@ -296,9 +299,9 @@ class Signup extends Component {
                 onChange={this.handleChange}
                 FullstackTheme={FullstackTheme}
               />
-            </InputFieldAndIcon>
+            </InputFieldAndIconContainer>
 
-            <InputFieldAndIcon FullstackTheme={FullstackTheme}>
+            <InputFieldAndIconContainer FullstackTheme={FullstackTheme}>
               <InputFieldLogo src={LockIcon} />
               <InputField
                 type="password"
@@ -308,7 +311,7 @@ class Signup extends Component {
                 onChange={this.handleChange}
                 FullstackTheme={FullstackTheme}
               />
-            </InputFieldAndIcon>
+            </InputFieldAndIconContainer>
 
             <SignUpButton
               type="submit"

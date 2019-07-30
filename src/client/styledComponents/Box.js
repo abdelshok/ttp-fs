@@ -9,7 +9,7 @@
 import styled from 'styled-components';
 
 const Box = styled.div`
-  height: 345px;
+  height: 365px;
   background-color: ${props => props.FullstackTheme.blockBackgroundColor};
   width: 400px;
   margin: 0 auto;
@@ -17,7 +17,6 @@ const Box = styled.div`
   margin-top: 7%;
   border-radius: ${props => props.FullstackTheme.blockBorderRadius};
   text-align: center;
-  justify-content: center;
 `;
 
 export default Box;

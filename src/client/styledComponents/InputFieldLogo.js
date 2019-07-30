@@ -6,7 +6,6 @@
 import styled from 'styled-components';
 
 const InputFieldLogo = styled.img`
-  height: 38px;
   width: 17px;
   margin-right: 28px;
   display: inline-block;

@@ -27,7 +27,7 @@ import NormalText from '../styledComponents/NormalText';
 import CenteredDiv from '../styledComponents/CenteredDiv';
 import BoxTitleText from '../styledComponents/BoxTitleText';
 import InputFieldLogo from '../styledComponents/InputFieldLogo';
-import InputFieldAndIcon from '../styledComponents/InputFieldAndIcon';
+import InputFieldAndIconContainer from '../styledComponents/InputFieldAndIconContainer';
 import FullstackTheme from '../styledComponents/FullstackTheme';
 
 
@@ -47,6 +47,10 @@ const LeftFloatDiv = styled(CenteredDiv)`
 `;
 
 const LinkSignUpText = styled(LinkText)`
+  margin-left: 10px;
+`;
+
+const NormalTextMarginLeft = styled(NormalText)`
   margin-left: 10px;
 `;
 
@@ -128,7 +132,7 @@ class Login extends Component {
             {''}
           </BoxTitleText>
           <form onSubmit={this.handleSubmit} value>
-            <InputFieldAndIcon FullstackTheme={FullstackTheme}>
+            <InputFieldAndIconContainer FullstackTheme={FullstackTheme}>
               <InputFieldLogo src={EmailIcon} />
               <InputField
                 type="email"
@@ -138,10 +142,10 @@ class Login extends Component {
                 onChange={this.handleChange}
                 FullstackTheme={FullstackTheme}
               />
-            </InputFieldAndIcon>
+            </InputFieldAndIconContainer>
             {/* EmailFieldComponent would replace the above piece of code */}
 
-            <InputFieldAndIcon FullstackTheme={FullstackTheme}>
+            <InputFieldAndIconContainer FullstackTheme={FullstackTheme}>
               <InputFieldLogo src={LockIcon} />
               <InputField
                 type="password"
@@ -151,12 +155,12 @@ class Login extends Component {
                 onChange={this.handleChange}
                 FullstackTheme={FullstackTheme}
               />
-            </InputFieldAndIcon>
+            </InputFieldAndIconContainer>
 
             <LongCenteredDiv>
               <LeftFloatDiv>
                 <Checkbox type="checkbox" FullstackTheme={FullstackTheme} />
-                <NormalText> Remember me </NormalText>
+                <NormalTextMarginLeft> Remember me </NormalTextMarginLeft>
               </LeftFloatDiv>
               <LinkText href=""> Forgot password? </LinkText>
             </LongCenteredDiv>

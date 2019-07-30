@@ -4,8 +4,8 @@
 
 import styled from 'styled-components';
 
-const InputFieldAndIcon = styled.div`
-  height: 42px;
+const InputFieldAndIconContainer = styled.div`
+  height: 34px;
   background-color: ${props => props.FullstackTheme.blockBackgroundColor};
   width: 60%;
   border-radius: ${props => props.FullstackTheme.blockBorderRadius};
@@ -18,9 +18,12 @@ const InputFieldAndIcon = styled.div`
   border-style: solid;
   margin: 0 auto;
   margin-bottom: 15px;
+  padding-left: 15px;
+  display: flex;
+  align-items: center;
 `;
 
-export default InputFieldAndIcon;
+export default InputFieldAndIconContainer;
 
 // Height is set 2px more than the "InputField" height
 // in order to make sure that they don't overlay on each other
