@@ -5,7 +5,7 @@
 import styled from 'styled-components';
 
 const NavigationBarLinkLogo = styled.img`
-  height: 100%;
+  height: 80%;
   width: 20px;
   margin-right: 5px;
 `;

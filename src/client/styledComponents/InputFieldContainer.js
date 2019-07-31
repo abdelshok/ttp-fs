@@ -3,6 +3,8 @@
 // And ensure that they are centered correctly withinn the input
 // field
 
+// TO BE DELETED: Component is useless.
+
 import styled from 'styled-components';
 
 const InputFieldContainer = styled.div`

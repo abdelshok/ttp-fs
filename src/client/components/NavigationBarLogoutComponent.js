@@ -6,15 +6,15 @@ import { Redirect, Link } from 'react-router-dom';
 // App Components
 import store from '../store/store';
 import { authenticateUser, setEmail, setPassword } from '../action-creators/actions';
-import TextContainer from '../styledComponents/NavigationBarIconTextContainer';
+import NavigationBarIconTextContainer from '../styledComponents/NavigationBarIconTextContainer';
 import NavigationBarTextLink from '../styledComponents/NavigationBarTextLink';
 import NavigationBarLinkLogo from '../styledComponents/NavigationBarLinkLogo';
 import FullstackTheme from '../styledComponents/FullstackTheme';
 
-const LogoutContainer = styled(TextContainer)`
-    position: absolute;
-    bottom: 15px;
-    margin-left: 90%;
+// Inline-block styled here in order to ensure that the element's width is correctly
+// visualized
+const LogoutContainer = styled(NavigationBarIconTextContainer)`
+    width: 120px;
 `;
 
 const PowerIcon = require('../assets/icons/powerIcon.svg');
@@ -60,7 +60,6 @@ class NavigationBarLogoutComponent extends Component {
     return (
       <LogoutContainer FullstackTheme={FullstackTheme}>
         {this.renderRedirect()}
-        <NavigationBarLinkLogo src={PowerIcon} />
         <Link to="login">
             <NavigationBarTextLink
             onClick={this.handleLogout}

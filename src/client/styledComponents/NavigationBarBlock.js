@@ -6,6 +6,9 @@ const NavigationBarBlock = styled.div`
   width: 100%;
   height: 6em;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 export default NavigationBarBlock;

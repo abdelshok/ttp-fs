@@ -226,7 +226,6 @@ class Signup extends Component {
           <form onSubmit={this.handleConfirmationSubmit} value>
 
           <InputFieldAndIconContainer FullstackTheme={FullstackTheme}>
-            <InputFieldContainer>
               <InputFieldLogo src={LockIcon} />
               <InputField
                 type="text"
@@ -236,7 +235,6 @@ class Signup extends Component {
                 onChange={this.handleChange}
                 FullstackTheme={FullstackTheme}
               />
-            </InputFieldContainer>
           </InputFieldAndIconContainer>
 
           <SignUpButton
