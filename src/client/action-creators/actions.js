@@ -3,8 +3,9 @@ import {
   SET_PASSWORD,
   USER_AUTHENTICATED,
   SET_MAIN_PAGE,
-  SET_NAME,
+  SET_FULL_NAME,
   SET_PORTFOLIO_AMOUNT,
+  SET_USER_ID,
 } from './constants';
 
 export const setEmail = function(email) { // eslint-disable-line
@@ -34,10 +35,10 @@ export const setMainPage = function(mainPageType) { // eslint-disable-line
   };
 };
 
-export const setName = function(userName) { // eslint-disable-line
+export const setFullName = function(userFullName) { // eslint-disable-line
   return {
-    type: SET_NAME,
-    userName,
+    type: SET_FULL_NAME,
+    userFullName,
   };
 };
 
@@ -45,6 +46,13 @@ export const setPortfolioAmount = function(portfolioAmount) { // eslint-disable-
   return {
     type: SET_PORTFOLIO_AMOUNT,
     portfolioAmount,
+  };
+};
+
+export const setUserId = function(userId) { // eslint-disable-line
+  return {
+    type: SET_USER_ID,
+    userId
   };
 };
 

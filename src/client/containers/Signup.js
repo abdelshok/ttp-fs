@@ -19,7 +19,9 @@ import axios from 'axios';
 import store from '../store/store';
 // POSSIBLY REMOVE THIS LOADER BUTTON
 import LoaderButtonComponent from '../components/LoaderButtonComponent';
-import {setEmail, setPassword, authenticateUser} from '../action-creators/actions';
+import {
+   setEmail, setPassword, authenticateUser, setPortfolioAmount, setFullName, setUserId
+  } from '../action-creators/actions';
 import Box from '../styledComponents/Box';
 import Button from '../styledComponents/Button';
 import LinkText from '../styledComponents/LinkText';
@@ -142,14 +144,18 @@ class Signup extends Component {
               serviceName: config.gateway.SERVICE_NAME
             }
           }
-        ).then(function response() {
+        ).then((response) => {
           console.log('Request to add user made to the DB.');
-        }).catch(function error() {
+          store.dispatch(setFullName(response.data.name));
+          store.dispatch(setUserId(response.data.user_id));
+          store.dispatch(setPortfolioAmount(response.data.amount));
+        }).catch(() => {
           console.log('Error. User not added to DB.');
-        }).finally(function() {
-          console.log('AXIOS request about to be exited successfully.')
+        }).finally(() => {
+          console.log('AXIOS request about to be exited successfully.');
         });
 
+        // Initialize the portfolio amount of the new user above, right here
       } catch (err) {
         alert(err.message); // eslint-disable-line
       }
