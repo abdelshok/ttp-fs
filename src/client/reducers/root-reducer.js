@@ -7,8 +7,8 @@ import {
   SET_PASSWORD,
   USER_AUTHENTICATED,
   SET_MAIN_PAGE,
-  SET_FIRST_NAME,
-  SET_LAST_NAME,
+  SET_NAME,
+  SET_PORTFOLIO_AMOUNT,
 } from '../action-creators/constants';
 
 // Still need to add the UserAuthenticated, etc. attributes here.
@@ -16,10 +16,10 @@ const initialState = {
   email: '',
   password: '',
   isAuthenticated: false,
-  userFirstName: '', // Placeholder name will be changed in order
-  userLastName: '', // Placeholder name will be changed in order,
+  userName: '',
   mainPageType: 'portfolio', // Might modify this set up for page shift between
   // portfolio and transactions.
+  portfolioAmount: ''
 };
 
 export default function reducer(state = initialState, action) {
@@ -29,17 +29,13 @@ export default function reducer(state = initialState, action) {
     case SET_PASSWORD:
       return Object.assign({}, state, { password: action.password });
     case USER_AUTHENTICATED:
-      return Object.assign({}, state, {
-        isAuthenticated: action.isAuthenticated,
-      });
+      return Object.assign({}, state, { isAuthenticated: action.isAuthenticated });
     case SET_MAIN_PAGE:
       return Object.assign({}, state, { mainPageType: action.mainPageType });
-    case SET_FIRST_NAME:
-      return Object.assign({}, state, { userFirstName: action.userFirstName });
-      // Written here under the assumption that the JSON file (dummy one being used)
-    case SET_LAST_NAME:
-      return Object.assign({}, state, { userLastName: action.userLastName });
-      // is an array with one element at Index 0, which is an object { userFirstName: ... , etc.}
+    case SET_NAME:
+      return Object.assign({}, state, { userName: action.userName });
+    case SET_PORTFOLIO_AMOUNT:
+      return Object.assign({}, state, { portfolioAmount: action.porfolioAmount });
     default:
       return state;
   }

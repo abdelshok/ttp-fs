@@ -3,8 +3,8 @@ import {
   SET_PASSWORD,
   USER_AUTHENTICATED,
   SET_MAIN_PAGE,
-  SET_FIRST_NAME,
-  SET_LAST_NAME,
+  SET_NAME,
+  SET_PORTFOLIO_AMOUNT,
 } from './constants';
 
 export const setEmail = function(email) { // eslint-disable-line
@@ -34,16 +34,21 @@ export const setMainPage = function(mainPageType) { // eslint-disable-line
   };
 };
 
-export const setUserFirstName = function(userFirstName) { // eslint-disable-line
+export const setName = function(userName) { // eslint-disable-line
   return {
-    type: SET_FIRST_NAME,
-    userFirstName,
+    type: SET_NAME,
+    userName,
   };
 };
 
-export const setUserLastName = function(userLastName) { // eslint-disable-line
+export const setPortfolioAmount = function(portfolioAmount) { // eslint-disable-line
   return {
-    type: SET_LAST_NAME,
-    userLastName,
+    type: SET_PORTFOLIO_AMOUNT,
+    portfolioAmount,
   };
 };
+
+// To later potentially store in the redux/reducer/actions: actions/functions that will store
+// the actual portfolio of the user. It is probably better to store the current stocks owned
+// locally, than the transactions, which may amount to a lot, after some time. But research if this
+// might affect performance.

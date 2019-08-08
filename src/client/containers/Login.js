@@ -12,12 +12,12 @@
 import styled from 'styled-components';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Redirect, Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Auth } from 'aws-amplify';
 // App Components
 import store from '../store/store';
-import {setEmail, setPassword, authenticateUser, setUserFirstName, setUserLastName} from '../action-creators/actions';
+import { setEmail, setPassword, authenticateUser } from '../action-creators/actions';
 import Box from '../styledComponents/Box';
 import Button from '../styledComponents/Button';
 import LinkText from '../styledComponents/LinkText';
@@ -101,8 +101,12 @@ class Login extends Component {
        console.log("User authenticated");
        this.setState({
          authenticated: true,
+         password: '',
        });
      }
+
+     // Clear out the password from local and redux state
+     store.dispatch(setPassword(''));
     } catch (err) {
       alert(err.message); // eslint-disable-line
     }

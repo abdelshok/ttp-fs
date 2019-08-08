@@ -19,7 +19,7 @@ import axios from 'axios';
 import store from '../store/store';
 // POSSIBLY REMOVE THIS LOADER BUTTON
 import LoaderButtonComponent from '../components/LoaderButtonComponent';
-import {setEmail, setPassword, authenticateUser, setUserFirstName, setUserLastName} from '../action-creators/actions';
+import {setEmail, setPassword, authenticateUser} from '../action-creators/actions';
 import Box from '../styledComponents/Box';
 import Button from '../styledComponents/Button';
 import LinkText from '../styledComponents/LinkText';

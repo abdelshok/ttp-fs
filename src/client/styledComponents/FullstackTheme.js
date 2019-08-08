@@ -16,12 +16,19 @@ const FullstackTheme = {
   blockBackgroundColor: 'white',
   boxShadow: 'rgba(171, 171, 171, 0.39) 0px 2px 32px 0px',
   blockBorderRadius: '3px',
-  appBackgroundColor: 'rgb(241, 241, 248)',
+  appBackgroundColor: 'rgb(255, 255, 255)',
   buttonBorderRadius: '10px',
   experienceBlockFontColor: 'black',
   footerBackgroundColor: 'rgb(3, 13, 21)',
   navigationBarBackgroundColor: 'white',
 };
+
+// To change:
+// "Box" and "Block" are used interchangeably. Use only one term, too confusing.
+// em is used instead of px in certain places. Again, pick one.
+// To think about:
+// Application general color is set initially to 'rgb(241, 241, 248)' - a whitish grey - but
+// it will be changed for the moment to white. Seems to be a better UX. Think about it.
 
 // Explanation:
 // experienceBlockFontColor: changes the color of all 3 elements within the experience block
@@ -41,8 +48,5 @@ const FullstackTheme = {
 // - NormaLText, CenteredDiv, Linktext, rendered in the Login.js container
 // - Rgb(199,199,199) is shared between different components, see if you can add it here.
 
-// To change:
-// "Box" and "Block" are used interchangeably. Use only one term, too confusing.
-// em is used instead of px in certain places. Again, pick one.
 
 export default FullstackTheme;
