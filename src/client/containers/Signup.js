@@ -138,8 +138,8 @@ class Signup extends Component {
           bodyParameters,
           {
             Auth: {
-              accessKey: config.gateway.ADDUSER_ACCESS_KEY,
-              secretKey: config.gateway.ADDUSER_SECRET_KEY,
+              accessKey: config.gateway.AWS_ACCESS_KEY,
+              secretKey: config.gateway.AWS_SECRET_KEY,
               region: config.gateway.ADDUSER_REGION,
               serviceName: config.gateway.SERVICE_NAME
             }

@@ -15,6 +15,7 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Auth } from 'aws-amplify';
+import axios from 'axios';
 // App Components
 import store from '../store/store';
 import { setEmail, setPassword, authenticateUser } from '../action-creators/actions';
