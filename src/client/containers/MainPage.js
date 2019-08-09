@@ -42,14 +42,11 @@ class MainPage extends Component {
         return ( 
         <div>
         <Grid container spacing={3}>
-            <Grid item xs={8} sm={4}>
+            <Grid item xs={12} sm={6}>
                 <BuyStockComponent />
             </Grid>
-            <Grid item xs={8} sm={4}>
-                <Paper>xs=8 sm=4</Paper>
-            </Grid>
-            <Grid item xs={8} sm={4}>
-                <Paper>xs=8 sm=6</Paper>
+            <Grid item xs={12} sm={6}>
+                <Paper>xs=12 sm=6</Paper>
             </Grid>
         </Grid>
         </div>          
