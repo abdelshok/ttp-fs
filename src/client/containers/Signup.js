@@ -140,7 +140,7 @@ class Signup extends Component {
             Auth: {
               accessKey: config.gateway.AWS_ACCESS_KEY,
               secretKey: config.gateway.AWS_SECRET_KEY,
-              region: config.gateway.ADDUSER_REGION,
+              region: config.gateway.USER_REGION,
               serviceName: config.gateway.SERVICE_NAME
             }
           }

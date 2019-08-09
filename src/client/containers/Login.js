@@ -18,7 +18,9 @@ import { Auth } from 'aws-amplify';
 import axios from 'axios';
 // App Components
 import store from '../store/store';
-import { setEmail, setPassword, authenticateUser } from '../action-creators/actions';
+import { 
+  setEmail, setPassword, authenticateUser, setFullName, setPortfolioAmount, setUserId
+} from '../action-creators/actions';
 import Box from '../styledComponents/Box';
 import Button from '../styledComponents/Button';
 import LinkText from '../styledComponents/LinkText';
@@ -30,7 +32,8 @@ import BoxTitleText from '../styledComponents/BoxTitleText';
 import InputFieldLogo from '../styledComponents/InputFieldLogo';
 import InputFieldAndIconContainer from '../styledComponents/InputFieldAndIconContainer';
 import FullstackTheme from '../styledComponents/FullstackTheme';
-
+// Environment Variables
+import config from '../config';
 
 const SmallCenteredDiv = styled(CenteredDiv)`
   width: 50%;
@@ -97,14 +100,42 @@ class Login extends Component {
       // Was going to add an if statement that executed the code below only if the async call returned successfully
       // But it seems like everything stops immediately if the async fails
       store.dispatch(authenticateUser(true)); // Does not run if the Auth call does not return a successful message.
-     
+      
+      // Concatenates the API & the user's email, to get the final link that will be inputted
+      // in the axios request
+      const apiGatewayLink = config.gateway.GETUSER_LINK + this.state.email;
+
+      axios.get(
+        apiGatewayLink
+      ).then((response) => {
+        console.log('The data returned is', response);
+
+        const fullName = response.data.Items[0].name;
+        const userId = response.data.Items[0].user_id;
+        const amount = response.data.Items[0].amount;
+
+        store.dispatch(setFullName(fullName));
+        store.dispatch(setUserId(userId));
+        store.dispatch(setPortfolioAmount(amount));
+      })
+      .catch((error) => {
+        console.log('Error is: ', error);
+      })
+      .finally(() => {
+        // always executed
+      });
+
+      console.log(' The API Gateway link that will be triggered is', apiGatewayLink);
+
+      // AXIOS request in order to retrieve the user's information from the DynamoDB database  
+
      if (store.getState().isAuthenticated == true) {
        console.log("User authenticated");
        this.setState({
          authenticated: true,
          password: '',
        });
-     }
+     };
 
      // Clear out the password from local and redux state
      store.dispatch(setPassword(''));
