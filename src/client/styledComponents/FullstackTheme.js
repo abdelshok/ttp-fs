@@ -12,6 +12,7 @@
 
 const FullstackTheme = {
   applicationGeneralColor: 'rgb(3, 13, 21)',
+  applicationTextColor: 'black',
   fontFamily: 'Poppins',
   blockBackgroundColor: 'white',
   boxShadow: 'rgba(171, 171, 171, 0.39) 0px 2px 32px 0px',

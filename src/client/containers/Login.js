@@ -112,7 +112,7 @@ class Login extends Component {
 
         const fullName = response.data.Items[0].name;
         const userId = response.data.Items[0].user_id;
-        const amount = response.data.Items[0].amount;
+        const { amount } = response.data.Items[0];
 
         store.dispatch(setFullName(fullName));
         store.dispatch(setUserId(userId));
@@ -127,8 +127,7 @@ class Login extends Component {
 
       console.log(' The API Gateway link that will be triggered is', apiGatewayLink);
 
-      // AXIOS request in order to retrieve the user's information from the DynamoDB database  
-
+      // AXIOS request in order to retrieve the user's information from the DynamoDB database
      if (store.getState().isAuthenticated == true) {
        console.log("User authenticated");
        this.setState({

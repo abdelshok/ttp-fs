@@ -11,6 +11,8 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 // Internal Modules
 import BuyStockComponent from '../components/BuyStockComponent';
+import MainPageUserInfoComponent from '../components/MainPageUserInfoComponent';
+
 
 // To finish: 
 // - Page is going to shift between the transactions and the stocks owned
@@ -43,10 +45,10 @@ class MainPage extends Component {
         <div>
         <Grid container spacing={3}>
             <Grid item xs={12} sm={6}>
-                <BuyStockComponent />
+                <MainPageUserInfoComponent />
             </Grid>
             <Grid item xs={12} sm={6}>
-                <Paper>xs=12 sm=6</Paper>
+                <BuyStockComponent />
             </Grid>
         </Grid>
         </div>          
