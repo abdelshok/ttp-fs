@@ -8,6 +8,7 @@
 import styled from 'styled-components';
 import React, { Component } from 'react';
 import axios from 'axios';
+import date from 'date-and-time';
 // Internal modules
 import store from '../store/store';
 import { setPortfolioAmount } from '../action-creators/actions';
@@ -80,12 +81,15 @@ class BuyStockComponent extends Component {
         // Variables will store the returned data from our request to the IEX API
         let returnedData;
         let stockData;
+        const now = new Date();
+
         try {
           returnedData = await axios.get(iexLink);
           console.log('Stock data is', returnedData);
           stockData = returnedData.data;
           const { portfolioAmount, userId, email } = store.getState();
           const totalPrice = Number(stockData.latestPrice) * quantity;
+          const currentDate = date.format(now, 'MM/DD/YYYY');
   
           // A body object is created with the associated user email in order
           // to store the transaction and the newly bought stocks in the database
@@ -97,7 +101,8 @@ class BuyStockComponent extends Component {
             latestPrice: stockData.latestPrice,
             quantity: Number(quantity),
             totalPrice,
-            openPrice: stockData.open == null ? Number(stockData.previousClose) : Number(stockData.open)
+            openPrice: stockData.open == null ? Number(stockData.previousClose) : Number(stockData.open),
+            currentDate
           };
           // NOTE: Make sure that the open attribute of the returned data
           // references the actual opening price of the day
@@ -118,7 +123,6 @@ class BuyStockComponent extends Component {
           console.log('Call to IEX API failed. Error message is: ', err);
           alert('Call to IEX API failed. Please enter a correct input.');
         }
-
       } catch (err) {
         alert(err.message); // eslint-disable-line
       }
