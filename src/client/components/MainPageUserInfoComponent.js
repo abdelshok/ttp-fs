@@ -9,7 +9,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 // App Components
-import store from '../store/store';
 import MainPageNormalDiv from '../styledComponents/MainPageNormalDiv';
 import MainPageNormalText from '../styledComponents/MainPageNormalText';
 import FullstackTheme from '../styledComponents/FullstackTheme';
@@ -26,21 +25,7 @@ const BoldTitleText = styled(MainPageNormalText)`
 class MainPageUserInfoComponent extends Component {
     constructor(props, context) {
         super(props, context);
-        const { userFullName } = store.getState();
-        const { portfolioAmount } = store.getState();
-
-        this.state = {
-            userFullName: userFullName,
-            portfolioAmount: portfolioAmount,
-        };
-        console.log('This is the state of the local comp.');
-        console.log('Full name:', this.state.userFullName);
-        console.log('portfolio ', this.state.portfolioAmount);
-    };
-
-    componentDidMount() {
-        const userFullName = store.getState().userFullName;
-        console.log("User full name after mounting", userFullName);
+        this.state = {};
     }
 
     render() {
@@ -66,7 +51,7 @@ MainPageUserInfoComponent.propTypes = {
 };
 
 MainPageUserInfoComponent.defaultProps = {
-    userFullName: 'James Bond',
+    userFullName: 'F. Scott Fitzgerald',
     portfolioAmount: 5000
 };
 
