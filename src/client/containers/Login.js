@@ -86,9 +86,10 @@ class Login extends Component {
   // Method used to authenticate the user with AWS Cognito
   handleSubmit = async (event) => {
     event.preventDefault();
-    store.dispatch(setEmail(this.state.email));
-    store.dispatch(setPassword(this.state.password));
-    try {  
+    const { email, password } = this.state;
+    store.dispatch(setEmail(email));
+    store.dispatch(setPassword(password));
+    try {
       // AUTHENTICATION WITH COGNITO BELOW
       // In Long Run
       // - after login is successful

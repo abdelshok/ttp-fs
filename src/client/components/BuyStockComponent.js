@@ -10,7 +10,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 // Internal modules
 import store from '../store/store';
-// import action creators
+import { setPortfolioAmount, setPassword }from '../action-creators/actions';
 import Box from '../styledComponents/Box';
 import Button from '../styledComponents/Button';
 import LinkText from '../styledComponents/LinkText';
@@ -65,22 +65,58 @@ class BuyStockComponent extends Component {
 
     handleSubmit = async (event) => {
       event.preventDefault();
+      const { stockTicket, quantity } = this.state;
 
-      // In submit function, we will look up the stock.
-      // receive the stock price, calculate the total price
-      // Store the name of the stock and quantity in an array/hash_map
-      // Store also the stock price of the morning? and compare it?
-      // Update the amount in the database:
-      // AWS lambda function to change the portfolio amount and return it
-      // AWS lambda function to store the transaction, include the date?
-      // AWS lambda function to store the stocks themselves (more complicated)
+      // In handleSubmit function, we will 1. look up the stock through IEX API
+      // receive the stock price, 2. calculate the total price and store locally
+      // 3. Store the name of the stock and quantity in an array/hash_map locally and update
+      // frontend accordingly 4. send new portfolio amount to DB
+      // 5. Update the transaction and portfolio databases accordingly
+      // 6. Set up a timer so that the function is triggered every hour to retrieve
+      // the stocks and compare them to the opening prices
+      // AWS lambda function to change the portfolio amount and return it (?)
+      // AWS lambda function to store the transaction, include the date, etc.
+      // AWS lambda function to store the stocks themselves (More complicated)
       // Do at the end
       try {
-        const iexLink = config.IEX.IEX_LINK_FIRST + this.state.stockTicket + config.IEX.IEX_LINK_SECOND + config.IEX.IEXCLOUD_SECRET_KEY;
+        const iexLink = config.IEX.IEX_LINK_FIRST + stockTicket + config.IEX.IEX_LINK_SECOND + config.IEX.IEXCLOUD_SECRET_KEY;
         console.log('IEX link will be sent to: ', iexLink);
-        const returnedStockData = await axios.get(iexLink);
-        console.log('Stock data is', returnedStockData);
+        const returnedData = await axios.get(iexLink);
+        console.log('Stock data is', returnedData);
+        const stockData = returnedData.data;
+        const { portfolioAmount, userId, email } = store.getState();
+        const totalPrice = Number(stockData.latestPrice) * quantity;
+        // A body object is created with the associated user email in order
+        // to store the transaction and the newly bought stocks in the database
+        const bodyParameters = {
+          email,
+          userId,
+          symbol: stockData.symbol,
+          companyName: stockData.companyName,
+          latestPrice: Number(stockData.latestPrice),
+          quantity: Number(quantity),
+          totalPrice,
+          openPrice: stockData.open
+        };
+        // NOTE: Make sure that the open attribute of the returned data
+        // references the actual opening price of the day
 
+        console.log('Body of new transaction:', bodyParameters);
+        const newPortfolioAmount = Number(portfolioAmount) - Math.floor(quantity * bodyParameters.latestPrice);
+        console.log('Amount remaining in portfolio: ', newPortfolioAmount);
+        // Set the new remaining portfolio in store before dispatching it and updating it in
+        // DynamoDB - ensuring that the amount shown on the client is the same as the one stored 
+        // in the backend
+        try {
+          store.dispatch(setPortfolioAmount(newPortfolioAmount));
+        } catch (err) {
+          alert('Error in dispatch to set portfolio');
+        }
+        // 1. Send data to database to store transaction and stock (last order of business)
+        // 2. Update data locally and re-render (do it second)
+        // 3. Calculate the amount left and send it to database (first order of business)
+
+        console.log('Body of newly bought stock', bodyParameters);
       } catch (err) {
         alert(err.message); // eslint-disable-line
       }
@@ -132,10 +168,7 @@ class BuyStockComponent extends Component {
         </div>
         </SpecialBox>
     );
-  };
+  }
 }
 
 export default BuyStockComponent;
-
-// <InputFieldLogo src={EmailIcon} />
-// <InputFieldLogo src={LockIcon} />
