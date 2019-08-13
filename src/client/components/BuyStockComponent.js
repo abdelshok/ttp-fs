@@ -10,15 +10,11 @@ import React, { Component } from 'react';
 import axios from 'axios';
 // Internal modules
 import store from '../store/store';
-import { setPortfolioAmount, setPassword }from '../action-creators/actions';
+import { setPortfolioAmount } from '../action-creators/actions';
 import Box from '../styledComponents/Box';
 import Button from '../styledComponents/Button';
-import LinkText from '../styledComponents/LinkText';
 import InputField from '../styledComponents/InputField';
-import NormalText from '../styledComponents/NormalText';
-import CenteredDiv from '../styledComponents/CenteredDiv';
 import BoxTitleText from '../styledComponents/BoxTitleText';
-import InputFieldLogo from '../styledComponents/InputFieldLogo';
 import InputFieldAndIconContainer from '../styledComponents/InputFieldAndIconContainer';
 import FullstackTheme from '../styledComponents/FullstackTheme';
 // Environment Variables
@@ -51,7 +47,7 @@ class BuyStockComponent extends Component {
         };
     }
 
-    // Method used to disable submit button while stockTicket and quantity 
+    // Method used to disable submit button while stockTicket and quantity
     // lengths are not validated
     validateForm = () => this.state.stockTicket.length > 0 && this.state.quantity.length > 0;
 
@@ -67,6 +63,9 @@ class BuyStockComponent extends Component {
       event.preventDefault();
       const { stockTicket, quantity } = this.state;
 
+      // 1. Send data to database to store transaction and stock (last order of business)
+      // 2. Update data locally and re-render (do it second)
+      // 3. Calculate the amount left and send it to database (first order of business)
       // In handleSubmit function, we will 1. look up the stock through IEX API
       // receive the stock price, 2. calculate the total price and store locally
       // 3. Store the name of the stock and quantity in an array/hash_map locally and update
@@ -81,7 +80,7 @@ class BuyStockComponent extends Component {
       try {
         // Final link of IEX API
         const iexLink = config.IEX.IEX_LINK_FIRST + stockTicket + config.IEX.IEX_LINK_SECOND + config.IEX.IEXCLOUD_SECRET_KEY;
-        // Returned data from our request to the IEX API
+        // Variables will store the returned data from our request to the IEX API
         let returnedData;
         let stockData;
         try {
@@ -105,8 +104,11 @@ class BuyStockComponent extends Component {
           };
           // NOTE: Make sure that the open attribute of the returned data
           // references the actual opening price of the day
-          console.log('Body of new transaction:', stockParameters);
+          console.log('Body of new stock:', stockParameters);
   
+          // If the new portfolio amount is below 0, balance is low, do not allow transaction
+          // or update user portfolio. If new portfolio amount is above 0, balance is enough,
+          // update user information locally and in DB.
           const newPortfolioAmount = Number(portfolioAmount) - Math.floor(totalPrice);
           if (newPortfolioAmount > 0) {
             console.log('Amount remaining in portfolio: ', newPortfolioAmount);
@@ -114,12 +116,7 @@ class BuyStockComponent extends Component {
           } else {
             alert('Price: ' + totalPrice +  '. Balance too low. Transaction cannot be made.');
           }
-  
-          // 1. Send data to database to store transaction and stock (last order of business)
-          // 2. Update data locally and re-render (do it second)
-          // 3. Calculate the amount left and send it to database (first order of business)
-  
-          console.log('Body of newly bought stock', stockParameters);
+        // Alert user if the input entered is incorrect (ie. inexistent company ticker)
         } catch (err) {
           console.log('Call to IEX API failed. Error message is: ', err);
           alert('Call to IEX API failed. Please enter a correct input.');
@@ -137,8 +134,11 @@ class BuyStockComponent extends Component {
         portfolioAmount: newPortfolioAmount
       };
 
+
       try {
+        // Modifies portfolio amount in redux state by dispatching action to reducer
         store.dispatch(setPortfolioAmount(newPortfolioAmount));
+        // Modifies portfolio amount in DynamoDB and returns the updated value
         const updatedUserData = await axios.put(config.gateway.UPDATEUSER_LINK, newPortfolioParameters);
         console.log('Updated user data from DynamoDB', updatedUserData);
       } catch (err) {
@@ -165,7 +165,6 @@ class BuyStockComponent extends Component {
                 FullstackTheme={FullstackTheme}
               />
             </InputFieldAndIconContainer>
-            {/* EmailFieldComponent would replace the above piece of code */}
 
             <InputFieldAndIconContainer FullstackTheme={FullstackTheme}>
               <InputField
