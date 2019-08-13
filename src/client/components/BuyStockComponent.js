@@ -1,5 +1,5 @@
 // BUY STOCK COMPONENT
-// Re-usable component used to purchase stocks. 
+// Re-usable component used to purchase stocks
 // Constitutes a box, with basic input fields for the stock name
 // and stock quantity.
 // Connected here to the IEX trading API through axios.
@@ -73,9 +73,6 @@ class BuyStockComponent extends Component {
       // 5. Update the transaction and portfolio databases accordingly
       // 6. Set up a timer so that the function is triggered every hour to retrieve
       // the stocks and compare them to the opening prices
-      // AWS lambda function to change the portfolio amount and return it (?)
-      // AWS lambda function to store the transaction, include the date, etc.
-      // AWS lambda function to store the stocks themselves (More complicated)
       // Do at the end
       try {
         // Final link of IEX API
@@ -97,10 +94,10 @@ class BuyStockComponent extends Component {
             userId,
             symbol: stockData.symbol,
             companyName: stockData.companyName,
-            latestPrice: Number(stockData.latestPrice),
+            latestPrice: stockData.latestPrice,
             quantity: Number(quantity),
             totalPrice,
-            openPrice: stockData.open
+            openPrice: stockData.open == null ? Number(stockData.previousClose) : Number(stockData.open)
           };
           // NOTE: Make sure that the open attribute of the returned data
           // references the actual opening price of the day
@@ -110,7 +107,7 @@ class BuyStockComponent extends Component {
           // or update user portfolio. If new portfolio amount is above 0, balance is enough,
           // update user information locally and in DB.
           const newPortfolioAmount = Number(portfolioAmount) - Math.floor(totalPrice);
-          if (newPortfolioAmount > 0) {
+          if (newPortfolioAmount >= 0) {
             console.log('Amount remaining in portfolio: ', newPortfolioAmount);
             this.updateUserPortfolio(email, newPortfolioAmount);
           } else {
@@ -126,14 +123,13 @@ class BuyStockComponent extends Component {
         alert(err.message); // eslint-disable-line
       }
     }
-    
-    // Updates user portfolio in local state and dynamoDB accordingly
+   
+    // Update user portfolio in local state and dynamoDB accordingly
     updateUserPortfolio = async (email, newPortfolioAmount) => {
       const newPortfolioParameters = {
         email,
         portfolioAmount: newPortfolioAmount
       };
-
 
       try {
         // Modifies portfolio amount in redux state by dispatching action to reducer
