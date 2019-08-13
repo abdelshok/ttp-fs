@@ -79,50 +79,74 @@ class BuyStockComponent extends Component {
       // AWS lambda function to store the stocks themselves (More complicated)
       // Do at the end
       try {
+        // Final link of IEX API
         const iexLink = config.IEX.IEX_LINK_FIRST + stockTicket + config.IEX.IEX_LINK_SECOND + config.IEX.IEXCLOUD_SECRET_KEY;
-        console.log('IEX link will be sent to: ', iexLink);
-        const returnedData = await axios.get(iexLink);
-        console.log('Stock data is', returnedData);
-        const stockData = returnedData.data;
-        const { portfolioAmount, userId, email } = store.getState();
-        const totalPrice = Number(stockData.latestPrice) * quantity;
-        // A body object is created with the associated user email in order
-        // to store the transaction and the newly bought stocks in the database
-        const bodyParameters = {
-          email,
-          userId,
-          symbol: stockData.symbol,
-          companyName: stockData.companyName,
-          latestPrice: Number(stockData.latestPrice),
-          quantity: Number(quantity),
-          totalPrice,
-          openPrice: stockData.open
-        };
-        // NOTE: Make sure that the open attribute of the returned data
-        // references the actual opening price of the day
-
-        console.log('Body of new transaction:', bodyParameters);
-        const newPortfolioAmount = Number(portfolioAmount) - Math.floor(quantity * bodyParameters.latestPrice);
-        console.log('Amount remaining in portfolio: ', newPortfolioAmount);
-        // Set the new remaining portfolio in store before dispatching it and updating it in
-        // DynamoDB - ensuring that the amount shown on the client is the same as the one stored 
-        // in the backend
+        // Returned data from our request to the IEX API
+        let returnedData;
+        let stockData;
         try {
-          store.dispatch(setPortfolioAmount(newPortfolioAmount));
+          returnedData = await axios.get(iexLink);
+          console.log('Stock data is', returnedData);
+          stockData = returnedData.data;
+          const { portfolioAmount, userId, email } = store.getState();
+          const totalPrice = Number(stockData.latestPrice) * quantity;
+  
+          // A body object is created with the associated user email in order
+          // to store the transaction and the newly bought stocks in the database
+          const stockParameters = {
+            email,
+            userId,
+            symbol: stockData.symbol,
+            companyName: stockData.companyName,
+            latestPrice: Number(stockData.latestPrice),
+            quantity: Number(quantity),
+            totalPrice,
+            openPrice: stockData.open
+          };
+          // NOTE: Make sure that the open attribute of the returned data
+          // references the actual opening price of the day
+          console.log('Body of new transaction:', stockParameters);
+  
+          const newPortfolioAmount = Number(portfolioAmount) - Math.floor(totalPrice);
+          if (newPortfolioAmount > 0) {
+            console.log('Amount remaining in portfolio: ', newPortfolioAmount);
+            this.updateUserPortfolio(email, newPortfolioAmount);
+          } else {
+            alert('Price: ' + totalPrice +  '. Balance too low. Transaction cannot be made.');
+          }
+  
+          // 1. Send data to database to store transaction and stock (last order of business)
+          // 2. Update data locally and re-render (do it second)
+          // 3. Calculate the amount left and send it to database (first order of business)
+  
+          console.log('Body of newly bought stock', stockParameters);
         } catch (err) {
-          alert('Error in dispatch to set portfolio');
+          console.log('Call to IEX API failed. Error message is: ', err);
+          alert('Call to IEX API failed. Please enter a correct input.');
         }
-        // 1. Send data to database to store transaction and stock (last order of business)
-        // 2. Update data locally and re-render (do it second)
-        // 3. Calculate the amount left and send it to database (first order of business)
 
-        console.log('Body of newly bought stock', bodyParameters);
       } catch (err) {
         alert(err.message); // eslint-disable-line
       }
     }
     
-    render() {
+    // Updates user portfolio in local state and dynamoDB accordingly
+    updateUserPortfolio = async (email, newPortfolioAmount) => {
+      const newPortfolioParameters = {
+        email,
+        portfolioAmount: newPortfolioAmount
+      };
+
+      try {
+        store.dispatch(setPortfolioAmount(newPortfolioAmount));
+        const updatedUserData = await axios.put(config.gateway.UPDATEUSER_LINK, newPortfolioParameters);
+        console.log('Updated user data from DynamoDB', updatedUserData);
+      } catch (err) {
+        alert('Error updating portfolio in DynamoDB or in setPorfolio dispatch');
+      }
+    }
+
+     render() {
       return (
         <SpecialBox FullstackTheme={FullstackTheme}>
         <div>
