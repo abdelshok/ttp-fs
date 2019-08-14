@@ -10,6 +10,8 @@ import {
   SET_FULL_NAME,
   SET_PORTFOLIO_AMOUNT,
   SET_USER_ID,
+  SET_STOCKS_LOGIN,
+  SET_TRANSACTIONS_LOGIN
 } from '../action-creators/constants';
 
 // Still need to add the UserAuthenticated, etc. attributes here.
@@ -22,14 +24,15 @@ const initialState = {
   // portfolio and transactions.
   portfolioAmount: 0,
   userId: '',
+  stocksArray: [],
+  transactionsArray: []
 };
 
 // Storing the user ID could be perceived as a potential security flaw, but in this case
-// the user ID is simply stored in the database, which is stored separately from the db
-// containing user authentication information, which itself doesn't contain the user ID
-// User ID is stored in redux store in order to be used when transactions are being made
-// by the user, so that the stocks & transactions can be stored in the database according
-// to the user's ID and therefore retrieved more easily
+// the user ID is simply stored in the database, which is stored separately from the Cognito
+// database containing user authentication information - which itself doesn't contain the user ID.
+// User ID stored in redux store in order to potentially optimize in the future and store the user's
+// data not according to the user's email (as the Primary Key), but according to the user's ID
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
@@ -47,6 +50,10 @@ export default function reducer(state = initialState, action) {
       return Object.assign({}, state, { portfolioAmount: action.portfolioAmount });
     case SET_USER_ID:
       return Object.assign({}, state, { userId: action.userId });
+    case SET_STOCKS_LOGIN:
+      return Object.assign({}, state, { stocksArray: action.stocksArray });
+    case SET_TRANSACTIONS_LOGIN:
+      return Object.assign({}, state, { transactionsArray: action.transactionsArray });
     default:
       return state;
   }

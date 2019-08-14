@@ -6,6 +6,8 @@ import {
   SET_FULL_NAME,
   SET_PORTFOLIO_AMOUNT,
   SET_USER_ID,
+  SET_STOCKS_LOGIN,
+  SET_TRANSACTIONS_LOGIN
 } from './constants';
 
 export const setEmail = function(email) { // eslint-disable-line
@@ -55,6 +57,22 @@ export const setUserId = function(userId) { // eslint-disable-line
     userId
   };
 };
+
+export const setStocksLogin = function(stocksArray) { // eslint-disable-line
+  return {
+    type: SET_STOCKS_LOGIN,
+    stocksArray
+  };
+};
+
+export const setTransactionsLogin = function(transactionsArray) { // eslint-disable-line
+  return {
+    type: SET_TRANSACTIONS_LOGIN,
+    transactionsArray
+  };
+};
+
+
 
 // To later potentially store in the redux/reducer/actions: actions/functions that will store
 // the actual portfolio of the user. It is probably better to store the current stocks owned

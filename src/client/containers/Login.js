@@ -1,17 +1,16 @@
 // LOGIN CONTAINER
 // - This is the login box, with the respective input fields for the email and password. 
+// - Uses AWS-amplify for user authentication and AWS Lambda functions through APIs set up through
+// API gateway in order to fetch the correct user information (name, amount in portfolio, list of 
+// stocks, transactions, etc.)
 
-// TO DO:
-// - Authentication going to be set up later
-// - "Remember me button to keep"
-// -  delete forgot password
-// - "Sign up" button wired to redirect to the sign up page
-// - Set up react-router
+// Future - Extra features that can be added later:
+// - "Remember me" button 
+// - Implement forgot password
 
 // Packages
 import styled from 'styled-components';
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Auth } from 'aws-amplify';
@@ -61,13 +60,6 @@ const NormalTextMarginLeft = styled(NormalText)`
 const EmailIcon = require('../assets/icons/emailIcon.svg');
 const LockIcon = require('../assets/icons/lockIcon.svg');
 
-// PropTypes is not necessary here because PropTypes is used in order
-// to ensure that the prop passed by the parent component is of the
-// right type. Type checking allows us to see if we pass in a type 
-// different from the intended prop by the child component.
-// Says here that propTypes are never used because they are used
-// as the value of the inputs, not directly used in the code. 
-
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -91,21 +83,20 @@ class Login extends Component {
     store.dispatch(setPassword(password));
     try {
       // AUTHENTICATION WITH COGNITO BELOW
-      // In Long Run
-      // - after login is successful
-      // - send call to API with email to fetch data
-      // - Now we are assuming that the data got back with the right format
       const result = await Auth.signIn(store.getState().email, store.getState().password);
       console.log("The result of signing in is", result);
-      // When the await works, then the code below gets executed, but when it does not, the code does not get executed
-      // Was going to add an if statement that executed the code below only if the async call returned successfully
-      // But it seems like everything stops immediately if the async fails
-      store.dispatch(authenticateUser(true)); // Does not run if the Auth call does not return a successful message.
+      // When the await works, then the code below gets executed, but when it does not, the code
+      // does not get executed. Initially was going to add an if statement that executed the code below 
+      // only if the async call returned successfull but it seems like everything stops immediately if 
+      // the async Auth.signIn function fails
+      store.dispatch(authenticateUser(true)); 
+      // Dispatch does not run if the Auth call above does not return a successful message
       
       // Concatenates the API & the user's email, to get the final link that will be inputted
       // in the axios request
       const apiGatewayLink = config.gateway.GETUSER_LINK + this.state.email;
 
+      // AXIOS request in order to retrieve the user's information from the DynamoDB database
       axios.get(
         apiGatewayLink
       ).then((response) => {
@@ -128,7 +119,6 @@ class Login extends Component {
 
       console.log(' The API Gateway link that will be triggered is', apiGatewayLink);
 
-      // AXIOS request in order to retrieve the user's information from the DynamoDB database
      if (store.getState().isAuthenticated == true) {
        console.log("User authenticated");
        this.setState({
@@ -137,13 +127,14 @@ class Login extends Component {
        });
      };
 
-     // Clear out the password from local and redux state
+     // Clear out the password from local and redux state in order to avoid security breach
      store.dispatch(setPassword(''));
     } catch (err) {
       alert(err.message); // eslint-disable-line
     }
   };
 
+  // Modify current state of the email and password fields according to what the user types
   handleChange = (event) => {
     this.setState({
       [event.target.id]: event.target.value,
@@ -152,6 +143,8 @@ class Login extends Component {
     console.log('State of password', this.state.password);
   };
 
+  // Function uses <Redirect /> component from react-router-dom to redirect us to the 
+  // main page once it is confirmed that user has authenticated
   renderRedirect = () => {
     if (store.getState().isAuthenticated === true) {
       return <Redirect to="/main" />;
