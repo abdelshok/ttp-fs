@@ -18,7 +18,7 @@ import axios from 'axios';
 // App Components
 import store from '../store/store';
 import { 
-  setEmail, setPassword, authenticateUser, setFullName, setPortfolioAmount, setUserId
+  setEmail, setPassword, authenticateUser, setFullName, setPortfolioAmount, setUserId, setStocksLogin, setTransactionsLogin
 } from '../action-creators/actions';
 import Box from '../styledComponents/Box';
 import Button from '../styledComponents/Button';
@@ -81,57 +81,91 @@ class Login extends Component {
     const { email, password } = this.state;
     store.dispatch(setEmail(email));
     store.dispatch(setPassword(password));
+
+    const stockDataLink = config.gateway.GETSTOCK_LINK + this.state.email;
+    console.log('The API link to retrieve stock information is', stockDataLink);
+    const transactionDataLink = config.gateway.GETTRANSACTION_LINK + this.state.email;
+    console.log('The API link to retrieve stock information is', transactionDataLink);
+
     try {
-      // AUTHENTICATION WITH COGNITO BELOW
+      // Authentication with AWS Cognito below
       const result = await Auth.signIn(store.getState().email, store.getState().password);
       console.log("The result of signing in is", result);
-      // When the await works, then the code below gets executed, but when it does not, the code
-      // does not get executed. Initially was going to add an if statement that executed the code below 
-      // only if the async call returned successfull but it seems like everything stops immediately if 
-      // the async Auth.signIn function fails
+      // When the await call returns successfully works, then the code below gets executed, but
+      // when it does not, the code does not get executed. As a result, handleSubmit's execution 
+      // stops immediately
+      
       store.dispatch(authenticateUser(true)); 
       // Dispatch does not run if the Auth call above does not return a successful message
       
       // Concatenates the API & the user's email, to get the final link that will be inputted
       // in the axios request
-      const apiGatewayLink = config.gateway.GETUSER_LINK + this.state.email;
+      const userDataLink = config.gateway.GETUSER_LINK + this.state.email;
 
-      // AXIOS request in order to retrieve the user's information from the DynamoDB database
-      axios.get(
-        apiGatewayLink
-      ).then((response) => {
-        console.log('The data returned is', response);
+      // Retrieves user data. Function declared below
+      this.retrieveUserData(userDataLink);
+    
+      // Retrieves stock and transaction data. Function declared below
+      this.retrieveStockTransactionData(stockDataLink, transactionDataLink);
 
-        const fullName = response.data.Items[0].name;
-        const userId = response.data.Items[0].user_id;
-        const { amount } = response.data.Items[0];
+      // If isAuthenticated state is true, then user has been correctly identified
+      // - Clear password field for security purposes 
+      // - Modify authenticated state to trigger React <Redirect> to the main page
+      if (store.getState().isAuthenticated == true) {
+        console.log("User authenticated");
+        this.setState({
+          authenticated: true,
+          password: '',
+        });
+      };
 
-        store.dispatch(setFullName(fullName));
-        store.dispatch(setUserId(userId));
-        store.dispatch(setPortfolioAmount(amount));
-      })
-      .catch((error) => {
-        console.log('Error is: ', error);
-      })
-      .finally(() => {
-        // always executed
-      });
-
-      console.log(' The API Gateway link that will be triggered is', apiGatewayLink);
-
-     if (store.getState().isAuthenticated == true) {
-       console.log("User authenticated");
-       this.setState({
-         authenticated: true,
-         password: '',
-       });
-     };
-
-     // Clear out the password from local and redux state in order to avoid security breach
-     store.dispatch(setPassword(''));
+      // In addition - clear out the password from local and redux state in order to avoid security
+      // breach
+      store.dispatch(setPassword(''));
     } catch (err) {
       alert(err.message); // eslint-disable-line
     }
+  };
+
+  // Function called in handleSubmit() to retrieve user general data
+  // - Param is userDataLink which is the link to the respective API in API gateway
+  // - Dispatches retrieved user information to redux store
+  retrieveUserData = async (userDataLink) => {
+    try {
+      const userData = await axios.get(userDataLink);
+      console.log('User data is ', userData);
+
+      const fullName = userData.data.Items[0].name;
+      const userId = userData.data.Items[0].user_id;
+      const { amount } = userData.data.Items[0];
+
+      store.dispatch(setFullName(fullName));
+      store.dispatch(setUserId(userId));
+      store.dispatch(setPortfolioAmount(amount));
+    } catch (err) {
+      console.log('Error fetching user data', err);
+    };
+  };
+
+  // Function called in handleSubmit() function above to retrieve user's stock and transaction list
+  // - Params include stockDataLink & transactionDataLink, which are links to the APIs in API gateway
+  // - Does not return any value, but dispatches the stock and transaction arrays to redux store
+  retrieveStockTransactionData = async (stockDataLink, transactionDataLink) => {
+    try {
+      const stockData = await axios.get(stockDataLink)
+      const transactionData = await axios.get(transactionDataLink);
+      const stockArray = stockData.data.Items;
+      const transactionArray = transactionData.data.Items;
+      console.log('Retrieved stock data', stockArray);
+      console.log('Retrieved transaction data', transactionArray);
+
+      store.dispatch(setStocksLogin(stockArray));
+      store.dispatch(setTransactionsLogin(transactionArray));
+
+    } catch (err) {
+      alert('Error caught while attempting to retrieve stock and transaction data.');
+      console.log('Error caught while attempting to retrieve stock and transaction data.');
+    };     
   };
 
   // Modify current state of the email and password fields according to what the user types
@@ -143,7 +177,7 @@ class Login extends Component {
     console.log('State of password', this.state.password);
   };
 
-  // Function uses <Redirect /> component from react-router-dom to redirect us to the 
+  // Function uses <Redirect /> component from react-router-dom to redirect user to the 
   // main page once it is confirmed that user has authenticated
   renderRedirect = () => {
     if (store.getState().isAuthenticated === true) {
