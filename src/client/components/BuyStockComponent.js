@@ -1,7 +1,6 @@
 // BUY STOCK COMPONENT
 // Re-usable component used to purchase stocks
-// Constitutes a box, with basic input fields for the stock name
-// and stock quantity.
+// Constitutes a box, with basic input fields for the stock name and stock quantity.
 // Connected here to the IEX trading API through axios.
 
 // Packages
@@ -20,6 +19,8 @@ import InputFieldAndIconContainer from '../styledComponents/InputFieldAndIconCon
 import FullstackTheme from '../styledComponents/FullstackTheme';
 // Environment Variables
 import config from '../config';
+// For generation of a secure Cryptographic key
+const cryptoRandomString = require('crypto-random-string');
 
 const SpecialBox = styled(Box)`
   border-radius: ${props => props.FullstackTheme.blockBorderRadius};
@@ -64,17 +65,10 @@ class BuyStockComponent extends Component {
       event.preventDefault();
       const { stockTicket, quantity } = this.state;
 
-      // 1. Send data to database to store transaction and stock (last order of business)
-      // 2. Update data locally and re-render (do it second)
-      // 3. Calculate the amount left and send it to database (first order of business)
-      // In handleSubmit function, we will 1. look up the stock through IEX API
-      // receive the stock price, 2. calculate the total price and store locally
-      // 3. Store the name of the stock and quantity in an array/hash_map locally and update
-      // frontend accordingly 4. send new portfolio amount to DB
-      // 5. Update the transaction and portfolio databases accordingly
-      // 6. Set up a timer so that the function is triggered every hour to retrieve
-      // the stocks and compare them to the opening prices
-      // Do at the end
+      // Left to do:
+      // Necessary: set up front-end redux store in order to store and update the portfolio data
+      // Potentially: set timer so that function is triggered every hour to check current price
+      // and update the stock color accordingly
       try {
         // Final link of IEX API
         const iexLink = config.IEX.IEX_LINK_FIRST + stockTicket + config.IEX.IEX_LINK_SECOND + config.IEX.IEXCLOUD_SECRET_KEY;
@@ -83,34 +77,45 @@ class BuyStockComponent extends Component {
         let stockData;
         const now = new Date();
 
+
         try {
           returnedData = await axios.get(iexLink);
           console.log('Stock data is', returnedData);
+          // Object containing stock information request by the user
           stockData = returnedData.data;
           const { portfolioAmount, userId, email } = store.getState();
           const totalPrice = Number(stockData.latestPrice) * quantity;
-          const currentDate = date.format(now, 'MM/DD/YYYY');
-  
+          // Current date calculated in order to be stored with transactions in the DynamoDB table
+          const currentDate = date.format(now, 'MM/DD/YYYY HH:mm');
+          // Cryptographic transaction ID generated of length 6 to act as transaction's sorting key
+          const transactionId = cryptoRandomString({ length: 6, type: 'base64' });
+
           // A body object is created with the associated user email in order
           // to store the transaction and the newly bought stocks in the database
           const stockParameters = {
             email,
-            userId,
+            user_id: userId,
             symbol: stockData.symbol,
             companyName: stockData.companyName,
-            latestPrice: stockData.latestPrice,
+            currentPrice: stockData.latestPrice,
             quantity: Number(quantity),
             totalPrice,
             openPrice: stockData.open == null ? Number(stockData.previousClose) : Number(stockData.open),
-            currentDate
+            currentDate,
+            transactionId
           };
-          // NOTE: Make sure that the open attribute of the returned data
-          // references the actual opening price of the day
+          // NOTE: Make sure that the 'open' attribute of the stock data returned by  
+          // IEX API is the actual opening price of the day - if it is not, we use the
+          // 'previousClose' attribute which could be the next day's opening price
+          // assuming that markets don't fluctuate
+
           console.log('Body of new stock:', stockParameters);
-  
+
+          // Add or update stock / transaction data within DynamoDB
+          this.addStockTransaction(stockParameters);
+          
           // If the new portfolio amount is below 0, balance is low, do not allow transaction
-          // or update user portfolio. If new portfolio amount is above 0, balance is enough,
-          // update user information locally and in DB.
+          // or update user portfolio. If not, update user information locally and in DB.
           const newPortfolioAmount = Number(portfolioAmount) - Math.floor(totalPrice);
           if (newPortfolioAmount >= 0) {
             console.log('Amount remaining in portfolio: ', newPortfolioAmount);
@@ -128,6 +133,16 @@ class BuyStockComponent extends Component {
       }
     }
    
+    addStockTransaction = async(stockTransactionParameters) => {
+      try {
+        const addedStockTransactionData = await axios.put(config.gateway.ADDSTOCKTRANSACTION_LINK, stockTransactionParameters);
+        console.log("Added stock transaction data retrieved", addedStockTransactionData);
+        // Pass here the newly acquired data object to the redux store in order to update the client-side accordingly
+      } catch (err) {
+        alert("Error adding or updating stock and transaction data");
+      }
+    }
+
     // Update user portfolio in local state and dynamoDB accordingly
     updateUserPortfolio = async (email, newPortfolioAmount) => {
       const newPortfolioParameters = {
@@ -136,9 +151,9 @@ class BuyStockComponent extends Component {
       };
 
       try {
-        // Modifies portfolio amount in redux state by dispatching action to reducer
+        // Modify portfolio amount in redux state by dispatching action to reducer
         store.dispatch(setPortfolioAmount(newPortfolioAmount));
-        // Modifies portfolio amount in DynamoDB and returns the updated value
+        // Modify portfolio amount in DynamoDB and returns the updated value
         const updatedUserData = await axios.put(config.gateway.UPDATEUSER_LINK, newPortfolioParameters);
         console.log('Updated user data from DynamoDB', updatedUserData);
       } catch (err) {

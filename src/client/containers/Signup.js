@@ -36,16 +36,12 @@ import InputFieldAndIconContainer from '../styledComponents/InputFieldAndIconCon
 import FullstackTheme from '../styledComponents/FullstackTheme';
 // Environment Variables 
 import config from '../config';
-
 // For generation of a secure Cryptographic key
-// External NPM Package
 const cryptoRandomString = require('crypto-random-string');
 // Assets
 const EmailIcon = require('../assets/icons/emailIcon.svg');
 const LockIcon = require('../assets/icons/lockIcon.svg');
 const ProfileIcon = require('../assets/icons/outline-person.svg');
-
-
 
 // Div block that centers the Links/Text at the end of the Signup Container
 const SmallCenteredDiv = styled(CenteredDiv)`
@@ -70,7 +66,6 @@ const SignUpButton = styled(Button)`
 const LinkSignUpText = styled(LinkText)`
   margin-left: 10px;
 `;
-
 
 class Signup extends Component {
   constructor(props) {
