@@ -100,7 +100,7 @@ class Login extends Component {
       // Concatenates the API & the user's email, to get the final link that will be inputted
       // in the axios request
       const userDataLink = config.gateway.GETUSER_LINK + this.state.email;
-
+      console.log('User Data Link', userDataLink);
       // Retrieves user data. Function declared below
       this.retrieveUserData(userDataLink);
     
@@ -136,7 +136,7 @@ class Login extends Component {
 
       const fullName = userData.data.Items[0].name;
       const userId = userData.data.Items[0].user_id;
-      const { amount } = userData.data.Items[0];
+      const { amount }  = userData.data.Items[0];
 
       store.dispatch(setFullName(fullName));
       store.dispatch(setUserId(userId));
@@ -151,7 +151,7 @@ class Login extends Component {
   // - Does not return any value, but dispatches the stock and transaction arrays to redux store
   retrieveStockTransactionData = async (stockDataLink, transactionDataLink) => {
     try {
-      const stockData = await axios.get(stockDataLink)
+      const stockData = await axios.get(stockDataLink);
       const transactionData = await axios.get(transactionDataLink);
       const stockArray = stockData.data.Items;
       const transactionArray = transactionData.data.Items;
@@ -162,7 +162,7 @@ class Login extends Component {
       store.dispatch(setTransactionsLogin(transactionArray));
 
     } catch (err) {
-      alert('Error caught while attempting to retrieve stock and transaction data.');
+      alert('Error caught while attempting to retrieve stock and transaction data.', err);
       console.log('Error caught while attempting to retrieve stock and transaction data.');
     };     
   };

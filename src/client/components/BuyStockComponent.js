@@ -85,7 +85,8 @@ class BuyStockComponent extends Component {
           // Object containing stock information request by the user
           stockData = returnedData.data;
           const { portfolioAmount, userId, email } = store.getState();
-          const totalPrice = Number(stockData.latestPrice) * quantity;
+          console.log('Store of redux when BuyStockComponent is rendered: ', store.getState());
+          console.log('Portfolio amount logged when user tries to purchase', portfolioAmount);          const totalPrice = Number(stockData.latestPrice) * quantity;
           // Current date calculated in order to be stored with transactions in the DynamoDB table
           const currentDate = date.format(now, 'MM/DD/YYYY');
           // Cryptographic transaction ID generated of length 6 to act as transaction's sorting key
@@ -110,7 +111,6 @@ class BuyStockComponent extends Component {
           // assuming that markets don't fluctuate
 
           console.log('Body of new stock:', stockParameters);
-
           
           // If the new portfolio amount is below 0, balance is low, do not allow transaction
           // or update user portfolio. If not, update user information locally and in DB.
@@ -148,6 +148,7 @@ class BuyStockComponent extends Component {
         store.dispatch(setTransactionsLogin(transactionsArray));
       } catch (err) {
         alert('Error adding or updating stock and transaction data');
+        console.log('Error in adding and updating stock/transaction in DynamoDB', err);
       }
     }
 
@@ -162,10 +163,12 @@ class BuyStockComponent extends Component {
         // Modifies portfolio amount in redux state by dispatching action to reducer
         store.dispatch(setPortfolioAmount(newPortfolioAmount));
         // Modifies portfolio amount in DynamoDB and returns the updated value
+        console.log('Config gateway to update user', config.gateway.UPDATEUSER_LINK);
         const updatedUserData = await axios.put(config.gateway.UPDATEUSER_LINK, newPortfolioParameters);
         console.log('Updated user data from DynamoDB', updatedUserData);
       } catch (err) {
-        alert('Error updating portfolio in DynamoDB or in setPorfolio dispatch');
+        alert('Error updating portfolio in DynamoDB or in setPorfolio dispatch', err.response);
+        console.log('Error in updating portfolio amount', err);
       }
     }
 

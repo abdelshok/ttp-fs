@@ -6,7 +6,7 @@
 import styled from 'styled-components';
 
 const StockPortfolioContainer = styled.div`
-  height: 340px;
+  height: 300px;
   background-color: ${props => props.FullstackTheme.blockBackgroundColor};
   width: 100%;
   max-width: 320px;
