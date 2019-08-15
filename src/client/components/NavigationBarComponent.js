@@ -2,12 +2,15 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 // App Components 
 import NavigationBarBlock from '../styledComponents/NavigationBarBlock';
 import FullstackTheme from '../styledComponents/FullstackTheme';
+import NavigationBarTextLink from '../styledComponents/NavigationBarTextLink';
 import NavigationBarLogoutComponent from './NavigationBarLogoutComponent';
+import { setMainPage } from '../action-creators/actions';
 import store from '../store/store';
-// import container of logo
+// Import container of logo
 import CompanyLogo from '../styledComponents/CompanyLogo';
 // Assets
 const CompanyLogoLink = require('../assets/website_logo_2.png');
@@ -18,9 +21,15 @@ class NavigationBarComponent extends Component {
         super(props);
         this.state = {
             unauthenticatedPage: 'login',
-            authenticatedPage: 'main'
+            authenticatedPage: 'main',
+
         };
         // State properties used only in this component for navigation between links
+    }
+
+    // Sends to the store what page: stocks or transactions the user wants to see
+    handlePageRequest = () => {
+        store.dispatch(setMainPage(event.target.id));    
     }
 
     render() {
@@ -41,9 +50,29 @@ class NavigationBarComponent extends Component {
                 <Link to={linkAddress}>
                     <CompanyLogo src={CompanyLogoLink} />
                 </Link>
+
+                { authenticationStatus === true &&
+                    <div>
+                    <NavigationBarTextLink 
+                    onClick={this.handlePageRequest}
+                    FullstackTheme={FullstackTheme}
+                    id="transactions"
+                    >
+                     Transactions 
+                    </NavigationBarTextLink>
+                    <NavigationBarTextLink 
+                    onClick={this.handlePageRequest}
+                    FullstackTheme={FullstackTheme}
+                    id="stocks">
+                     Stocks 
+                    </NavigationBarTextLink>
+                    </div>
+                }
+
                 { authenticationStatus === true &&
                         <NavigationBarLogoutComponent />
                 }
+
             </NavigationBarBlock>
         );
     }

@@ -1,6 +1,5 @@
 // ##########################################################################################
 //
-// DON'T UNDERSTAND THIS PART, SO COME BACK AND READ THIS
 // This simple component creates a Route where the child
 // component that it renders contains the passed in props. Let’s take a quick look at how
 // this being done.

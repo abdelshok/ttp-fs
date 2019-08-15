@@ -20,7 +20,7 @@ const initialState = {
   password: '',
   isAuthenticated: false,
   userFullName: '',
-  mainPageType: 'portfolio', // Might modify this set up for page shift between
+  mainPageType: 'stocks', // Might modify this set up for page shift between
   // portfolio and transactions.
   portfolioAmount: 0,
   userId: '',

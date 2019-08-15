@@ -1,6 +1,6 @@
 // Navigation Bar Icon and Text
-// - Component that wraps the Navigation Bar links and their respective logo.
-// - IMPROVE LATER:  Hover works for the text but not for logo
+// - Component that wraps the Navigation Bar links and their 
+// respective logo.
 
 import styled from 'styled-components';
 
@@ -13,6 +13,3 @@ const NavigationBarIconTextContainer = styled.div`
 `;
 
 export default NavigationBarIconTextContainer;
-
-// RESEARCH LATER: Removed height:30px here and both the Logout logo
-// and the "Logout" text are more aligned with each other

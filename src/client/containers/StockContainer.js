@@ -11,7 +11,7 @@ import StockPortfolioContainer from '../styledComponents/StockPortfolioContainer
 import FullstackTheme from '../styledComponents/FullstackTheme';
 import StockListComponent from '../components/StockListComponent';
 import store from '../store/store';
-import StockText from '../styledComponents/StockText';
+import PortfolioText from '../styledComponents/PortfolioText';
 
 class StockContainer extends Component {
     constructor(props, context) {
@@ -19,15 +19,13 @@ class StockContainer extends Component {
     }
 
     render() {
-			console.log('Stock container props are', this.props);
-
 			// Creates a JSX list of all the different Stock components
 			const stockList = this.props.stocksArray.map((stock, index) => {
 				return (
-						<StockText FullstackTheme={FullstackTheme} stock={stock} key={index}> 
+						<PortfolioText FullstackTheme={FullstackTheme} stock={stock} key={index}> 
 							<div> {stock.companyName} x {stock.quantity} </div>
-							<div> ${stock.currentPrice * stock.quantity} </div>
-						</StockText>
+							<div> ${Math.floor(stock.currentPrice * stock.quantity)} </div>
+						</PortfolioText>
 				);
 			});
 
@@ -41,22 +39,19 @@ class StockContainer extends Component {
 
 // Typechecking for the stockContainer props
 StockContainer.propTypes = {
-	stocksArray: PropTypes.array,
-	transactionsArray: PropTypes.array
+	stocksArray: PropTypes.array
 };
 
 // Sets the defaultProps of the stockContainer to empty arrays
 StockContainer.defaultProps = {
-	stocksArray: [],
-	transactionsArray: []
+	stocksArray: []
 };
 
 // Maps the store's properties to the above component's props in order 
 // to re-render the stockContainer with the proper stock list
 function mapStateToProps(state) {
 	return {
-			stocksArray: state.stocksArray,
-			transactionsArray: state.transactionsArray
+			stocksArray: state.stocksArray
 	};
 }
 

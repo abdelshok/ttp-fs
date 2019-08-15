@@ -87,10 +87,9 @@ class BuyStockComponent extends Component {
           const { portfolioAmount, userId, email } = store.getState();
           const totalPrice = Number(stockData.latestPrice) * quantity;
           // Current date calculated in order to be stored with transactions in the DynamoDB table
-          const currentDate = date.format(now, 'MM/DD/YYYY HH:mm');
+          const currentDate = date.format(now, 'MM/DD/YYYY');
           // Cryptographic transaction ID generated of length 6 to act as transaction's sorting key
           const transactionId = cryptoRandomString({ length: 6, type: 'base64' });
-
           // A body object is created with the associated user email in order
           // to store the transaction and the newly bought stocks in the database
           const stockParameters = {
@@ -152,9 +151,9 @@ class BuyStockComponent extends Component {
       };
 
       try {
-        // Modify portfolio amount in redux state by dispatching action to reducer
+        // Modifies portfolio amount in redux state by dispatching action to reducer
         store.dispatch(setPortfolioAmount(newPortfolioAmount));
-        // Modify portfolio amount in DynamoDB and returns the updated value
+        // Modifies portfolio amount in DynamoDB and returns the updated value
         const updatedUserData = await axios.put(config.gateway.UPDATEUSER_LINK, newPortfolioParameters);
         console.log('Updated user data from DynamoDB', updatedUserData);
       } catch (err) {

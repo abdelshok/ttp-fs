@@ -27,9 +27,6 @@ const FullstackTheme = {
 // To change:
 // "Box" and "Block" are used interchangeably. Use only one term, too confusing.
 // em is used instead of px in certain places. Again, pick one.
-// To think about:
-// Application general color is set initially to 'rgb(241, 241, 248)' - a whitish grey - but
-// it will be changed for the moment to white. Seems to be a better UX. Think about it.
 
 // Explanation:
 // experienceBlockFontColor: changes the color of all 3 elements within the experience block
@@ -44,10 +41,9 @@ const FullstackTheme = {
 
 
 // Notes:
-// Pass down this Theme as a prop to any component that will utilize one of itsstyles.
+// Pass down this Theme as a prop to any component that will utilize one of it's styles
 // Font Family constant is passed to all components except:
 // - NormaLText, CenteredDiv, Linktext, rendered in the Login.js container
-// - Rgb(199,199,199) is shared between different components, see if you can add it here.
-
+// - Rgb(199,199,199) is shared between different components, see if you can add it here
 
 export default FullstackTheme;

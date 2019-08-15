@@ -72,9 +72,5 @@ export const setTransactionsLogin = function(transactionsArray) { // eslint-disa
   };
 };
 
-
-
-// To later potentially store in the redux/reducer/actions: actions/functions that will store
-// the actual portfolio of the user. It is probably better to store the current stocks owned
-// locally, than the transactions, which may amount to a lot, after some time. But research if this
-// might affect performance.
+// Research how much data can the redux store data at once before it affects
+// page and loading performance

@@ -12,6 +12,10 @@ const NavigationBarTextLink = styled.p`
   display: inline-block;
   color: black;
   font-size: 14px;
+  &:hover {
+    cursor: pointer;
+  }
+  padding: 20px;
 `;
 
 // Height of text specified above is not working for some reason

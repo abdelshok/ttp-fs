@@ -1,53 +1,43 @@
 // MAIN PAGE Container
-// - Main page for user, present after successful authentication.
-// - Page will contain general information about the user and the two main uses of the app,
-// either getting a list of past Transactions or looking at the current stocks held.
+// - Main page for user, shown after successful authentication.
+// - Page contains basic information about the user and the two main uses of the app,
+// either giving a list of past Transactions or looking at the current stocks held
 
 // Packages
-import styled from 'styled-components';
 import React, { Component } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 // Internal Modules
 import BuyStockComponent from '../components/BuyStockComponent';
 import MainPageUserInfoComponent from '../components/MainPageUserInfoComponent';
 import StockContainer from '../containers/StockContainer';
-
-
-// To finish: 
-// - Page is going to shift between the transactions and the stocks owned
-// - New component that will list the stock name, quantity, and total amount will be created
-// - New component also to create for transactions: holds inside
-// name of ticket, quantity bought, price of transaction.
-
-const useStyles = makeStyles(theme => ({
-    root: {
-      flexGrow: 1,
-    },
-    paper: {
-      padding: theme.spacing(2),
-      textAlign: 'center',
-      color: theme.palette.text.secondary,
-    },
-  }));
-
+import TransactionContainer from '../containers/TransactionContainer';
 
 class MainPage extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            page: 'stocks',
-        };
     }
 
     render() {
+        let mainPage;
+        // Depending on the mainPageType in the store, the container
+        // will either show the transaction or the stock components 
+        if (this.props.mainPageType == "transactions") {
+            mainPage = <TransactionContainer />
+        } else if (this.props.mainPageType == "stocks") {
+            mainPage = <StockContainer />
+        }
+
+        // MainPageUserInfoComponent contains basic user data & MainPage
+        // either contains Stock or Transaction Data
         return ( 
         <div>
         <Grid container spacing={3}>
             <Grid item xs={12} sm={6}>
                 <MainPageUserInfoComponent />
-                <StockContainer />
+                {mainPage}
             </Grid>
             <Grid item xs={12} sm={6}>
                 <BuyStockComponent />
@@ -58,7 +48,23 @@ class MainPage extends Component {
     }
 }
 
+// Typechecking for the MainPage props
+MainPage.propTypes = {
+	mainPageType: PropTypes.string
+};
+
+// Sets the defaultProps of the MainPage to empty arrays
+MainPage.defaultProps = {
+	stocksArray: "stocks"
+};
+
+// Maps the store's properties to the above component's props in order 
+// to re-render the MainPage with the proper stock list
+function mapStateToProps(state) {
+	return {
+			mainPageType: state.mainPageType
+	};
+}
 
 
-
-export default MainPage;
+export default connect(mapStateToProps)(MainPage);

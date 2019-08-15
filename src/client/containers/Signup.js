@@ -1,12 +1,12 @@
-// Signup CONTAINER
-// - This is the login box, with the respective input fields for the email and password. 
+// Signup Container
+// - This is the SignUp box, with the respective input fields 
+// for the email and password. 
+// - Password is verified through Cognito, which ensures that it 
+// has capitalized characters, a number, and non-capitalized 
+// characters
 
-// TO DO:
-// - Authentication going to be set up later
-// - "Remember me button to keep"
-// -  delete forgot password
-// - "Sign up" button wired to redirect to the sign up page
-// - Set up react-router
+// Potential improvements:
+// - Implement Remember me and forgot password features
 
 // Packages
 import styled from 'styled-components';
@@ -17,7 +17,7 @@ import { Auth } from 'aws-amplify';
 import axios from 'axios';
 // App Components
 import store from '../store/store';
-// POSSIBLY REMOVE THIS LOADER BUTTON
+// Strangely vital part of the create-react-app application - 
 import LoaderButtonComponent from '../components/LoaderButtonComponent';
 import {
    setEmail, setPassword, authenticateUser, setPortfolioAmount, setFullName, setUserId
@@ -25,13 +25,10 @@ import {
 import Box from '../styledComponents/Box';
 import Button from '../styledComponents/Button';
 import LinkText from '../styledComponents/LinkText';
-import Checkbox from '../styledComponents/Checkbox';
 import InputField from '../styledComponents/InputField';
-import NormalText from '../styledComponents/NormalText';
 import CenteredDiv from '../styledComponents/CenteredDiv';
 import BoxTitleText from '../styledComponents/BoxTitleText';
 import InputFieldLogo from '../styledComponents/InputFieldLogo';
-import InputFieldContainer from '../styledComponents/InputFieldContainer'
 import InputFieldAndIconContainer from '../styledComponents/InputFieldAndIconContainer';
 import FullstackTheme from '../styledComponents/FullstackTheme';
 // Environment Variables 

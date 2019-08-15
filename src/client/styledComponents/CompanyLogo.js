@@ -1,4 +1,6 @@
 // Styling of Seed logo in the Navigation Bar
+// Styled so that it is placed on the left of the NavitationBarBlock, 
+// which is a div
 import styled from 'styled-components';
 
 const CompanyLogo = styled.img`

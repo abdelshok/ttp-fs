@@ -108,8 +108,8 @@ class Login extends Component {
       this.retrieveStockTransactionData(stockDataLink, transactionDataLink);
 
       // If isAuthenticated state is true, then user has been correctly identified
-      // - Clear password field for security purposes 
-      // - Modify authenticated state to trigger React <Redirect> to the main page
+      // - Clears password field for security purposes 
+      // - Modifies authenticated state to trigger React <Redirect> to the main page
       if (store.getState().isAuthenticated == true) {
         console.log("User authenticated");
         this.setState({
@@ -118,8 +118,8 @@ class Login extends Component {
         });
       };
 
-      // In addition - clear out the password from local and redux state in order to avoid security
-      // breach
+      // In addition - clears out the password from local and redux state in order to avoid
+      // security breach
       store.dispatch(setPassword(''));
     } catch (err) {
       alert(err.message); // eslint-disable-line

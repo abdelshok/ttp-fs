@@ -19,10 +19,7 @@ const StockPortfolioContainer = styled.div`
   border-style: solid;
   margin: 0 auto;
   padding: 30px;
+  overflow-y: scroll;
 `;
 
 export default StockPortfolioContainer;
-
-// To decide: these two don't seem to make a difference
-// display: flex;
-// align-items: center;
