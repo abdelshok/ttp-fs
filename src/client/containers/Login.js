@@ -172,8 +172,6 @@ class Login extends Component {
     this.setState({
       [event.target.id]: event.target.value,
     });
-    console.log('State of email', this.state.email); 
-    console.log('State of password', this.state.password);
   };
 
   // Function uses <Redirect /> component from react-router-dom to redirect user to the 

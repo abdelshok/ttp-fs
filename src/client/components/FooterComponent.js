@@ -10,23 +10,12 @@
 
 // Packages
 import React from 'react';
-
+// Internal Modules
 import FooterLink from '../styledComponents/FooterLink';
 import Footer from '../styledComponents/FooterComponent';
 import FooterText from '../styledComponents/FooterText';
 import FooterBlock from '../styledComponents/FooterBlock';
 import FullstackTheme from '../styledComponents/FullstackTheme';
-
-// Styles
-// import '../css/FooterComponent.css';
-
-// const FooterImprintLink = FooterLink.extend`
-//  padding-top: 10px;
-// `;
-
-// const FooterTextCopyright = FooterText.extend`
-//  padding-top: 10px;
-// `;
 
 const FooterComponent = () => (
   <Footer FullstackTheme={FullstackTheme}>

@@ -29,8 +29,3 @@ export default InputFieldAndIconContainer;
 // in order to make sure that they don't overlay on each other
 // Because the input field makes the border of the div
 // invisible
-
-// &:hover {
-//  background: rgb(0, 209, 107);
-//  border-color: black;
-// }

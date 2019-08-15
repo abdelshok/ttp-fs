@@ -11,7 +11,3 @@ const NavigationBarLinkLogo = styled.img`
 `;
 
 export default NavigationBarLinkLogo;
-
-// Notes:
-// Color of icons does not change, whether it is hovered or directly set with a property
-// color: red. Fix that.

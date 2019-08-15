@@ -92,7 +92,7 @@ class Signup extends Component {
         store.dispatch(setEmail(this.state.email));
         store.dispatch(setPassword(this.state.password));
 
-        // Authentication below
+        // Signup / Authentication below
         // If authentication does not work, because either email or password is incorrect
         // then function returns alert() message.
         // If authentication works correctly, we save the user returned by handleSubmit()
@@ -125,6 +125,7 @@ class Signup extends Component {
           name: this.state.name
         };
 
+        // Adds the user and the user's data to the DynamoDB table 
         axios.put(
           config.gateway.ADDUSER_LINK,
           bodyParameters,
@@ -156,6 +157,8 @@ class Signup extends Component {
     }
   };
 
+  // Handler used to confirm the user has entered the right confirmationc code
+  // and sign in the user into the application
   handleConfirmationSubmit = async (event) => {
     event.preventDefault();
 
@@ -163,13 +166,10 @@ class Signup extends Component {
       await Auth.confirmSignUp(this.state.email, this.state.confirmationCode);
       await Auth.signIn(this.state.email, this.state.password);
       
-      // Get the user information by fetching it from the database here
-
       store.dispatch(authenticateUser(true));
       console.log('Is user authenticated after dispatch', store.getState().isAuthenticated);
 
       // Sets local state authenticated attribute to true in order to trigger re-rendering
-      // Potential modification???
       this.setState({
         authenticated: true,
       });
@@ -212,6 +212,8 @@ class Signup extends Component {
     }
   }
 
+  // Renders confirmation form after the user has signed up
+  // Asks the user to input the security code the user received by email
   renderConfirmationForm() {
     return (
       <SmallSignUpBox FullstackTheme={FullstackTheme}>
@@ -250,6 +252,10 @@ class Signup extends Component {
     );
   }
   
+  // Renders the original signup form the user needs to fill up in order to use
+  // the application
+  // After user signs up, the renderConfirmationForm() function above is used 
+  // to render the confirmation form the user needs to ultimately log in
   renderForm() {
     return (
       <BigSignUpBox FullstackTheme={FullstackTheme}>

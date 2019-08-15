@@ -24,8 +24,3 @@ const InputField = styled.input`
 
 export default InputField;
 
-// height: 38px;
-// Height is set 2px less than the "InputFieldAndIconContainer" height
-// in order to make sure that they don't overlay on each other
-// Because the input field makes the border of the parent div
-// invisible

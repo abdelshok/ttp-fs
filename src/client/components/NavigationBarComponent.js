@@ -1,7 +1,15 @@
+// Navigation Bar Component
+// Component representing the Navigation Bar, which contains the company logo,
+// the Transaction / Stocks buttons that toggle between both lists, and the logout
+// button
+// - Functionality in this component is limited to switching the store's mainPage state
+// in order to toggle between the transactions and the stocks
+// All other functionality is contained within this component's component: Logout component, etc.
+// This ensures that they are all "self-contained";
+
 // Packages
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 // App Components 
 import NavigationBarBlock from '../styledComponents/NavigationBarBlock';
@@ -19,15 +27,17 @@ const CompanyLogoLink = require('../assets/website_logo_2.png');
 class NavigationBarComponent extends Component {
     constructor(props) {
         super(props);
+        // State properties are local to component and are used to render
+        // the logged in Navigation bar look or the logged out navigation 
+        // bar look
         this.state = {
             unauthenticatedPage: 'login',
             authenticatedPage: 'main',
-
         };
-        // State properties used only in this component for navigation between links
+
     }
 
-    // Sends to the store what page: stocks or transactions the user wants to see
+    // Sends to the store what page: 'stocks' or 'transactions' the user wants to see
     handlePageRequest = () => {
         store.dispatch(setMainPage(event.target.id));    
     }

@@ -16,7 +16,4 @@ const Button = styled.button`
   }
 `;
 
-// Button background color will also become a constant, color is shared with
-// a lot of different p elements
-
 export default Button;

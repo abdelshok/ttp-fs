@@ -1,4 +1,4 @@
-// General style for the normal texts that will be in the footer. Position
+// General style for the 'normal' texts that will be in the footer. Position
 // can be set within the container itself
 import styled from 'styled-components';
 

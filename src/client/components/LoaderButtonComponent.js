@@ -1,6 +1,5 @@
 // LOADER BUTTON COMPONENT
 // - Used previously to show a loading icon when user logged in. 
-// Can be deleted or re-used. Your move.
 // NOT USED BUT DO NOT DELETE --> WILL BREAK THE APP
 
 // Packages

@@ -2,7 +2,6 @@
 // - Has the option of adding the prop "important" in order to make it bold
 // ie. <Linktext href="" important/> Sign up </Linktext>
 
-// You have constant right now change that
 import styled from 'styled-components';
 
 const LinkText = styled.a`
@@ -16,7 +15,8 @@ const LinkText = styled.a`
   }
 `;
 
-// Notes:
+// To fix later:
 // Theme prop fontFamily doesn't work when passed here...
+// You have constant right now change that
 
 export default LinkText;

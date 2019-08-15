@@ -9,7 +9,6 @@ import PropTypes from 'prop-types';
 // Internal modules 
 import StockPortfolioContainer from '../styledComponents/StockPortfolioContainer';
 import FullstackTheme from '../styledComponents/FullstackTheme';
-import StockListComponent from '../components/StockListComponent';
 import store from '../store/store';
 import PortfolioText from '../styledComponents/PortfolioText';
 import styled from 'styled-components';

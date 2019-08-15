@@ -1,6 +1,5 @@
 // Navigation Bar Icon and Text
-// - Component that wraps the Navigation Bar links and their 
-// respective logo.
+// - Component that wraps the Navigation Bar links and their  respective logo
 
 import styled from 'styled-components';
 

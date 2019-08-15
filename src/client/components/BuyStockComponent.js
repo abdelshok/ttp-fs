@@ -10,7 +10,7 @@ import axios from 'axios';
 import date from 'date-and-time';
 // Internal modules
 import store from '../store/store';
-import { setPortfolioAmount } from '../action-creators/actions';
+import { setPortfolioAmount, setStocksLogin, setTransactionsLogin } from '../action-creators/actions';
 import Box from '../styledComponents/Box';
 import Button from '../styledComponents/Button';
 import InputField from '../styledComponents/InputField';
@@ -111,22 +111,23 @@ class BuyStockComponent extends Component {
 
           console.log('Body of new stock:', stockParameters);
 
-          // Add or update stock / transaction data within DynamoDB
-          this.addStockTransaction(stockParameters);
           
           // If the new portfolio amount is below 0, balance is low, do not allow transaction
           // or update user portfolio. If not, update user information locally and in DB.
           const newPortfolioAmount = Number(portfolioAmount) - Math.floor(totalPrice);
           if (newPortfolioAmount >= 0) {
             console.log('Amount remaining in portfolio: ', newPortfolioAmount);
-            this.updateUserPortfolio(email, newPortfolioAmount);
+            this.updateUserAmount(email, newPortfolioAmount);
+
+            // Add or update stock and transaction data within DynamoDB
+            this.addStockTransaction(stockParameters);
           } else {
             alert('Price: ' + totalPrice +  '. Balance too low. Transaction cannot be made.');
           }
         // Alert user if the input entered is incorrect (ie. inexistent company ticker)
         } catch (err) {
           console.log('Call to IEX API failed. Error message is: ', err);
-          alert('Call to IEX API failed. Please enter a correct input.');
+          alert('Call to IEX API failed. Please enter a correct input. Ie: AAPL, GOOG, AMZN, TSLA, SNAP, MSFT.');
         }
       } catch (err) {
         alert(err.message); // eslint-disable-line
@@ -136,15 +137,22 @@ class BuyStockComponent extends Component {
     addStockTransaction = async(stockTransactionParameters) => {
       try {
         const addedStockTransactionData = await axios.put(config.gateway.ADDSTOCKTRANSACTION_LINK, stockTransactionParameters);
-        console.log("Added stock transaction data retrieved", addedStockTransactionData);
+        console.log('Added stock transaction data retrieved', addedStockTransactionData);
+        const stocksArray = addedStockTransactionData.data.stocks_array;
+        const transactionsArray = addedStockTransactionData.data.transactions_array;
+        console.log('New stocks array', stocksArray);
+        console.log('New transactions array', transactionsArray);
+
         // Pass here the newly acquired data object to the redux store in order to update the client-side accordingly
+        store.dispatch(setStocksLogin(stocksArray));
+        store.dispatch(setTransactionsLogin(transactionsArray));
       } catch (err) {
-        alert("Error adding or updating stock and transaction data");
+        alert('Error adding or updating stock and transaction data');
       }
     }
 
     // Update user portfolio in local state and dynamoDB accordingly
-    updateUserPortfolio = async (email, newPortfolioAmount) => {
+    updateUserAmount = async (email, newPortfolioAmount) => {
       const newPortfolioParameters = {
         email,
         portfolioAmount: newPortfolioAmount
