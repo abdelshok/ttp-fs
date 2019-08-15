@@ -1,3 +1,7 @@
+// General Application Container
+// As the title describes, container that wraps the entire app and outputs
+// the logged in or logged out page depending on the user's authentication status 
+
 // Packages
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';

@@ -1,21 +1,22 @@
-// Packages
+// Index JS File
+// Renders the whole Application through the <App /> container
+// Wrapped by Provider component in order to give the App access to the redux store
+// Router component allows us to re-route between different routes
 
-// // React related
+// React Packages
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom'; // Maybe get rid later?
 import { Provider } from 'react-redux';
-
-// // AWS
+// AWS Packages
 import Amplify from 'aws-amplify';
-
 
 // App Components
 import App from './App';
 import store from './store/store';
 import config from './config';
 
-
+// Configuration of AWS Cognito
 Amplify.configure({
     Auth: {
       mandatorySignIn: true,

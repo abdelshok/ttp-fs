@@ -1,7 +1,6 @@
 // ROOT REDUCER
-// - Sets three different states for now: the email, password, and the
-// authentication status of the user.
-
+// Sets the state of the application depending on the different action-creators
+// it receives
 import {
   SET_EMAIL,
   SET_PASSWORD,
@@ -14,14 +13,12 @@ import {
   SET_TRANSACTIONS_LOGIN
 } from '../action-creators/constants';
 
-// Still need to add the UserAuthenticated, etc. attributes here.
 const initialState = {
   email: '',
   password: '',
   isAuthenticated: false,
   userFullName: '',
-  mainPageType: 'stocks', // Might modify this set up for page shift between
-  // portfolio and transactions.
+  mainPageType: 'stocks',
   portfolioAmount: 0,
   userId: '',
   stocksArray: [],
@@ -30,8 +27,9 @@ const initialState = {
 
 // Storing the user ID could be perceived as a potential security flaw, but in this case
 // the user ID is simply stored in the database, which is stored separately from the Cognito
-// database containing user authentication information - which itself doesn't contain the user ID.
-// User ID stored in redux store in order to potentially optimize in the future and store the user's
+// database containing user authentication information - meaning that no malicious user can
+// access the user's authentication data with the user_id
+// Also, user ID stored in redux store in order to potentially optimize in the future and store the user's
 // data not according to the user's email (as the Primary Key), but according to the user's ID
 
 export default function reducer(state = initialState, action) {

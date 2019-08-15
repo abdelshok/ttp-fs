@@ -127,7 +127,7 @@ class BuyStockComponent extends Component {
         // Alert user if the input entered is incorrect (ie. inexistent company ticker)
         } catch (err) {
           console.log('Call to IEX API failed. Error message is: ', err);
-          alert('Call to IEX API failed. Please enter a correct input. Ie: AAPL, GOOG, AMZN, TSLA, SNAP, MSFT.');
+          alert('Call to IEX API failed. Please enter a correct input. Ie: AAPL, GOOG, AMZN, TSLA, SNAP, MSFT, CKX, AXU.');
         }
       } catch (err) {
         alert(err.message); // eslint-disable-line

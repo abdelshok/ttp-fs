@@ -1,3 +1,5 @@
+// Redux store to keep state
+
 import { createStore } from 'redux';
 import reducer from '../reducers/root-reducer';
 
