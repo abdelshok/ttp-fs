@@ -12,6 +12,7 @@ import Grid from '@material-ui/core/Grid';
 // Internal Modules
 import BuyStockComponent from '../components/BuyStockComponent';
 import MainPageUserInfoComponent from '../components/MainPageUserInfoComponent';
+import StockContainer from '../containers/StockContainer';
 
 
 // To finish: 
@@ -46,6 +47,7 @@ class MainPage extends Component {
         <Grid container spacing={3}>
             <Grid item xs={12} sm={6}>
                 <MainPageUserInfoComponent />
+                <StockContainer />
             </Grid>
             <Grid item xs={12} sm={6}>
                 <BuyStockComponent />

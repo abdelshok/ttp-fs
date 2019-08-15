@@ -31,7 +31,8 @@ const SpecialBox = styled(Box)`
   border-width: thin;
   border-style: solid;
   margin-left: 20%;
-  margin-top: 12%;
+  margin-top: 110px;
+  height: 340px;
 `;
 
 const PurchaseBox = styled(Button)`

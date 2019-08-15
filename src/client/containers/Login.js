@@ -70,7 +70,6 @@ class Login extends Component {
     };
   }
 
-
   // Method used to disable submit button while password and email lengths are not validated
   validateForm = () =>
     this.state.email.length > 0 && this.state.password.length > 0;
