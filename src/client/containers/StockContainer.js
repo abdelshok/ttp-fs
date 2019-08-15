@@ -9,7 +9,9 @@ import PropTypes from 'prop-types';
 // Internal modules 
 import StockPortfolioContainer from '../styledComponents/StockPortfolioContainer';
 import FullstackTheme from '../styledComponents/FullstackTheme';
+import StockListComponent from '../components/StockListComponent';
 import store from '../store/store';
+import StockText from '../styledComponents/StockText';
 
 class StockContainer extends Component {
     constructor(props, context) {
@@ -18,9 +20,20 @@ class StockContainer extends Component {
 
     render() {
 			console.log('Stock container props are', this.props);
+
+			// Creates a JSX list of all the different Stock components
+			const stockList = this.props.stocksArray.map((stock, index) => {
+				return (
+						<StockText FullstackTheme={FullstackTheme} stock={stock} key={index}> 
+							<div> {stock.companyName} x {stock.quantity} </div>
+							<div> ${stock.currentPrice * stock.quantity} </div>
+						</StockText>
+				);
+			});
+
 			return (
 				<StockPortfolioContainer FullstackTheme={FullstackTheme} >
-					<p> STOCK 1 </p>
+						{stockList}
 				</StockPortfolioContainer>
 			);
     };

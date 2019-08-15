@@ -18,7 +18,7 @@ const StockPortfolioContainer = styled.div`
   border-width: thin;
   border-style: solid;
   margin: 0 auto;
-  padding-left: 15px;
+  padding: 30px;
 `;
 
 export default StockPortfolioContainer;

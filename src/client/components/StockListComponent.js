@@ -4,24 +4,24 @@
 // Packages
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import { FixedSizeList } from 'react-window';
+// Internal Modules
+import StockText from '../styledComponents/StockText';
+import FullstackTheme from '../styledComponents/FullstackTheme';
 
-function Row(props) {
-    const { index, style } = props;
-  
-    return (
-      <ListItem button style={style} key={index}>
-            <ListItemText primary={`Item ${index + 1}`} />
-        </ListItem>
-    );
+class StockListComponent extends Component {
+    constructor(props) {
+        super(props);
+        console.log('Props are', props)
+    }
+
+    render(){
+        console.log('Props stocks are', props.stock);
+        return (
+            <StockText FullstackTheme={FullstackTheme} > Apple </StockText>
+        )
+    }
 }
-  
-Row.propTypes = {
-  index: PropTypes.number.isRequired,
-  style: PropTypes.object.isRequired,
-};
 
-export default Row;
+export default StockListComponent;
+
+// TO DELETE
