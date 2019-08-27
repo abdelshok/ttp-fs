@@ -7,6 +7,8 @@ yarn.lock
 
 # Configuration Codes
 src/client/config.js
+# Configuration variables have been included in VS Control for Heroku
+# Will be taken off actual deployment on Github
 
 ### Node ###
 # Logs
