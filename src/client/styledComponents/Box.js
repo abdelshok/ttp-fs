@@ -14,9 +14,10 @@ const Box = styled.div`
   width: 400px;
   margin: 0 auto;
   box-shadow: ${props => props.FullstackTheme.boxShadow};
-  margin-top: 7%;
+  margin-top: 5%;
   border-radius: ${props => props.FullstackTheme.blockBorderRadius};
   text-align: center;
+  margin-bottom: 5%;
 `;
 
 export default Box;

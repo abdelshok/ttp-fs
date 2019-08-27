@@ -49,7 +49,7 @@ const SmallCenteredDiv = styled(CenteredDiv)`
 // Style of Box Component extended and size increased because SignUp container
 // holds more components than the Login container
 const BigSignUpBox = styled(Box)`
-  height: 420px;
+  height: 390px;
 `;
 
 const SmallSignUpBox = styled(Box)`

@@ -15,3 +15,5 @@ const Footer = styled.div`
 `;
 
 export default Footer;
+
+// TOFIX: position: absolute of footer component
