@@ -9,7 +9,7 @@
 
 // Packages
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 // App Components 
 import NavigationBarBlock from '../styledComponents/NavigationBarBlock';
@@ -23,6 +23,18 @@ import CompanyLogo from '../styledComponents/CompanyLogo';
 // Assets
 const CompanyLogoLink = require('../assets/website_logo_2.png');
 
+const NavigationBarHeaderText = styled.h1`
+  font-family: 'Crimson Text';
+  font-weight: 900;
+  font-size: 50px;
+  color: black;
+  text-decoration: none;
+  padding-left: 20px;
+  &:hover {
+    color: rgb(153, 153, 153);
+    transition: .7s ease;
+  }
+`;
 
 class NavigationBarComponent extends Component {
     constructor(props) {
@@ -31,8 +43,8 @@ class NavigationBarComponent extends Component {
         // the logged in Navigation bar look or the logged out navigation 
         // bar look
         this.state = {
-            unauthenticatedPage: 'login',
-            authenticatedPage: 'main',
+            unauthenticatedPage: '/login',
+            authenticatedPage: '/main',
         };
 
     }
@@ -54,12 +66,21 @@ class NavigationBarComponent extends Component {
             linkAddress = this.state.unauthenticatedPage;
         }
 
-        console.log('In NavBarComponent, linkAdress ', linkAddress);
         return (
             <NavigationBarBlock FullstackTheme={FullstackTheme}>
-                <Link to={linkAddress}>
-                    <CompanyLogo src={CompanyLogoLink} />
-                </Link>
+                
+                
+                {/* Contrarily to <Link > from react-router-dom, <NavLink /> can be styled */}
+                <NavLink to={linkAddress}
+                 style={{
+                    textDecoration: "none",
+                }}
+                >
+                    <NavigationBarHeaderText> 
+                            Penny
+                    </NavigationBarHeaderText>                
+                </NavLink>
+
 
                 { authenticationStatus === true &&
                     <div>
@@ -78,6 +99,7 @@ class NavigationBarComponent extends Component {
                     </NavigationBarTextLink>
                     </div>
                 }
+
 
                 { authenticationStatus === true &&
                         <NavigationBarLogoutComponent />

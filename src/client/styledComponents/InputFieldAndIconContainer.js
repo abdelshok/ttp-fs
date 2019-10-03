@@ -9,11 +9,15 @@ const InputFieldAndIconContainer = styled.div`
   background-color: ${props => props.FullstackTheme.blockBackgroundColor};
   width: 60%;
   border-radius: ${props => props.FullstackTheme.blockBorderRadius};
-  border-color: rgb(199, 199, 199);
+  border-color: white;
   overflow: auto;
   &:hover {
-    border-color: rgb(0, 209, 107);
+    border-color: #000;
+    font-size: 16px;
+    font-weight: bold;
+    transition: .7s ease;
   }
+  transition: 1s ease;
   border-width: thin;
   border-style: solid;
   margin: 0 auto;

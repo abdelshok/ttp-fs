@@ -4,8 +4,8 @@ import styled from 'styled-components';
 
 const FooterText = styled.p`
   font-family: ${props => props.FullstackTheme.fontFamily};
-  font-size: 10px;
-  color: rgb(199, 199, 199);
+  font-size:  ${props => props.FullstackTheme.footerTextSize};
+  color: ${props => props.FullstackTheme.applicationTextColor};
   display: block;
   position: relative;
   width: 80px;

@@ -3,7 +3,7 @@
 import styled from "styled-components";
 
 const NormalText = styled.p`
-  font-family: "Poppins";
+  font-family: "Helvetica";
   font-size: 12px;
   color: rgb(172, 171, 171);
   display: inline;

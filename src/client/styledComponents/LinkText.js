@@ -5,7 +5,7 @@
 import styled from 'styled-components';
 
 const LinkText = styled.a`
-  font-family: 'Poppins';
+  font-family: 'Helvetica';
   font-size: 12px;
   color: rgb(3, 13, 21);
   font-weight: ${props => (props.important ? 'bold' : 'normal')};

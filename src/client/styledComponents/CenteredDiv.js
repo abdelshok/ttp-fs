@@ -6,7 +6,7 @@
 import styled from 'styled-components';
 
 const CenteredDiv = styled.div`
-  font-family: Poppins;
+  font-family: Helvetica;
   font-size: 12px;
   position: relative;
   width: 90px;

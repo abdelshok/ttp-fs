@@ -5,10 +5,11 @@ import styled from 'styled-components';
 
 const Footer = styled.div`
   background-color: ${props => props.FullstackTheme.footerBackgroundColor};
-  height: 7.5em;
+  height: 80px;
   width: 100%;
   position: absolute;
   justify-content: center;
+  border-top: 1px solid #000;
   display: flex;
   left: 0;
   bottom: 0;

@@ -18,6 +18,8 @@ const Box = styled.div`
   border-radius: ${props => props.FullstackTheme.blockBorderRadius};
   text-align: center;
   margin-bottom: 5%;
+  border: 1px solid #3c3c3c;
+  border-top: 20px solid #000;
 `;
 
 export default Box;

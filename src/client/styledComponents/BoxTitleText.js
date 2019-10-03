@@ -4,7 +4,8 @@ import styled from 'styled-components';
 const BoxTitleText = styled.p`
   font-family: ${props => props.FullstackTheme.fontFamily};
   height: 40px;
-  font-size: 16px;
+  font-size: 20px;
+  font-weight: bold;
   color: black;
   padding-top: 40px;
 `;

@@ -2,7 +2,6 @@
 // across the application.
 // Ie. All boxes/blocks whether it is for login or for the experiences have the same
 // background color, box-radius shape, and shadow
-// Ie. A lot of Talent Space content has the same atypical red color.
 // Height, width, margin, coloring of general content, etc. between
 // different components is determined within the StyledComponents themselves,
 // as each one of them has an
@@ -11,17 +10,19 @@
 // the different components of the application
 
 const FullstackTheme = {
-  applicationGeneralColor: 'rgb(3, 13, 21)',
+  applicationGeneralColor: '#000', // Black
   applicationTextColor: 'black',
-  fontFamily: 'Poppins',
+  fontFamily: 'Crimson Text',  // Similar to Miller, Georgia. Serif is a better look.
   blockBackgroundColor: 'white',
   boxShadow: 'rgba(171, 171, 171, 0.39) 0px 2px 32px 0px',
   blockBorderRadius: '3px',
   appBackgroundColor: 'rgb(255, 255, 255)',
-  buttonBorderRadius: '10px',
+  buttonBorderRadius: '1px',
+  buttonBackgroundColor: 'white',
   experienceBlockFontColor: 'black',
-  footerBackgroundColor: 'rgb(3, 13, 21)',
+  footerBackgroundColor: 'white',
   navigationBarBackgroundColor: 'white',
+  footerTextSize: '12px',
 };
 
 // To change:
@@ -29,16 +30,13 @@ const FullstackTheme = {
 // em is used instead of px in certain places. Again, pick one.
 
 // Explanation:
-// experienceBlockFontColor: changes the color of all 3 elements within the experience block
-// blockBorderRadius: changes border radius of all block/boxes in the app, ie. login box,
-//  experience box, signup box, etc.
+// blockBorderRadius: changes border radius of all block/boxes in the app, ie. login box, signup box, etc.
 // appBackgroundColor: general background color of the website. Set to light grey.
 // buttonBorderRadius: general border radius for all buttons in the application. Colors of
-// buttons might differ. if color of buttons do not differ a buttonBackgroundColor prop will be
+// buttons might diff‡er. if color of buttons do not differ a buttonBackgroundColor prop will be
 // added blockBackgroundColor: changes background color of all blocks, such as the login blocks,
 // the experience blocks, sign up blocks, companie blocks, etc.
 // navigationBarBackgroundColor: self explanatory.
-
 
 // Notes:
 // Pass down this Theme as a prop to any component that will utilize one of it's styles

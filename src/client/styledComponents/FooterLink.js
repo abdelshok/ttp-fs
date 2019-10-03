@@ -3,10 +3,10 @@ import styled from 'styled-components';
 
 const FooterLink = styled.a`
   font-family: ${props => props.FullstackTheme.fontFamily};
-  font-size: 10px;
-  color: rgb(222, 222, 222);
+  font-size: ${props => props.FullstackTheme.footerTextSize};
+  color: ${props => props.FullstackTheme.applicationTextColor};
   &:hover {
-    color: white;
+    color: black;
   }
   &:visited {
     color: none;

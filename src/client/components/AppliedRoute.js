@@ -7,10 +7,8 @@
 //
 // ##########################################################################################
 
-// Not using the "Component" suffix because it is more clear when we use it as a <Route />
-// in the route.js file.
 
-// Packages
+// External Packages
 import React from 'react';
 import { Route } from 'react-router-dom';
 

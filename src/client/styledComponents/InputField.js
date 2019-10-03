@@ -9,7 +9,8 @@ import styled from 'styled-components';
 
 const InputField = styled.input`
   font-family: ${props => props.FullstackTheme.fontFamily};
-  font-size: 13px;
+  font-size: 16px;
+  width: 100%;
   text-align: left;
   color: black;
   border-color: none;

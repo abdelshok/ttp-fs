@@ -5,7 +5,7 @@
 import styled from 'styled-components';
 
 const MainPageNormalDiv = styled.div`
-    font-family: Poppins;
+    font-family: Helvetica;
     width: 100%;
     height: auto;
     padding: 10px;

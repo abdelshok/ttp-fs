@@ -30,7 +30,7 @@ const FooterComponent = () => (
       </FooterLink>
       <FooterText FullstackTheme={FullstackTheme}>
         {' '}
-        © Seed
+        © Penny
         {' '}
       </FooterText>
     </FooterBlock>
