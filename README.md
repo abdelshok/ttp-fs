@@ -31,8 +31,6 @@ In the development mode, we have 2 servers running. The front end code will be s
 
 In the production mode, we will have only 1 server running. All the client side code will be bundled into static files using webpack and it will be served by the Node.js/Express application.
 
-## Documentation
-
 ### Folder Structure
 
 All the source code will be inside **src** directory. Inside src, there is client and server directory. All the frontend code (react, css, js and any other assets) will be in client directory. Backend Node.js/Express code will be in the server directory.
