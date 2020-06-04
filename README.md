@@ -1,10 +1,24 @@
-# Seed Investment
-
 <div align="center">
   <img alt="Logo" src="https://user-images.githubusercontent.com/20652426/83801530-4cead980-a677-11ea-9802-fcc5e942950b.png" width="100" />
 </div>
 
+<h2 align="center">
+  Seed Investment
+</h2>
+
+<p align="center">
+FinTech application that allows users to trade stocks using real-time data powered by the IEX API. Users can track past transactions, see a list of their current stocks, and a live analysis of their portfolio based on opening day prices.
+</p>
+
+
+<div align="center">
+  <img alt="seedInvestment" src="https://user-images.githubusercontent.com/20652426/83799623-18c1e980-a674-11ea-8549-f4cbddf8dd65.png"
+  width: "500" />
+</div>
+
+<h3 marginTop="20px">
 These technologies were used:
+</h3>
 
 - [simple-react-full-stack](#simple-react-full-stack)
 - [Styled Components](https://www.styled-components.com/)
@@ -12,10 +26,6 @@ These technologies were used:
 - [Redux](https://redux.js.org/)
 - [AWS](https://aws.amazon.com/): AWS Cognito, DynamoDB, Lambda, and API Gateway
 - [IEX API](https://iexcloud.io/docs/api/)
-
-<div align="center">
-  <img alt="seedInvestment" src="https://user-images.githubusercontent.com/20652426/83799623-18c1e980-a674-11ea-8549-f4cbddf8dd65.png"/>
-</div>
 
 
 ## Why ⛩
