@@ -10,6 +10,7 @@ These technologies were used:
 - [Styled Components](https://www.styled-components.com/)
 - [React-Redux](https://react-redux.js.org/)
 - [Redux](https://redux.js.org/)
+- [AWS](https://aws.amazon.com/): AWS Cognito, DynamoDB, Lambda, and API Gateway
 - [IEX API](https://iexcloud.io/docs/api/)
 
 <div align="center">
