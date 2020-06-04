@@ -4,10 +4,6 @@
   <img alt="Logo" src="https://user-images.githubusercontent.com/20652426/83801530-4cead980-a677-11ea-9802-fcc5e942950b.png" width="100" />
 </div>
 
-<div align="center">
-  <img alt="seedInvestment" src="https://user-images.githubusercontent.com/20652426/83799623-18c1e980-a674-11ea-8549-f4cbddf8dd65.png"/>
-</div>
-
 These technologies were used:
 
 - [simple-react-full-stack](#simple-react-full-stack)
@@ -15,6 +11,11 @@ These technologies were used:
 - [React-Redux](https://react-redux.js.org/)
 - [Redux](https://redux.js.org/)
 - [IEX API](https://iexcloud.io/docs/api/)
+
+<div align="center">
+  <img alt="seedInvestment" src="https://user-images.githubusercontent.com/20652426/83799623-18c1e980-a674-11ea-8549-f4cbddf8dd65.png"/>
+</div>
+
 
 ## Why ⛩
 
