@@ -1,7 +1,7 @@
 {
-  "name": "simple-react-full-stack",
+  "name": "Seed Investment",
   "version": "1.0.0",
-  "description": "Boilerplate to build a full stack web application using React, Node.js, Express and Webpack.",
+  "description": "Stock Trading Application",
   "main": "src/server/index.js",
   "engines": {
     "node": "8.11.3"
