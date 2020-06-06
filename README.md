@@ -30,7 +30,7 @@ These technologies were used:
 
 ## Why ⛩
 
-I had the idea for the creation of a specific FinTech company, so I decided to get familiar with the different financial APIs that existed and build a small application around that. After users authenticate with Amazon Cognito, they are automatically given 10,000 fictional dollars to invest and trade stocks (e.g. AAPL), using real-time data powered by the iEX API. Users can see a history of all of their past transactions and access a live analysis of their portfolio, based on opening day prices. Multi-factor authentication is also set up to improve security.
+I had the idea for a specific FinTech company, so I decided to get familiar with the different financial APIs that existed and build a small application around that. After users authenticate with Amazon Cognito, they are automatically given 10,000 fictional dollars to invest and trade stocks (e.g. AAPL), using real-time data powered by the iEX API. Users can see a history of all of their past transactions and access a live analysis of their portfolio, based on opening day prices. Multi-factor authentication is also set up to improve security.
 
 ## Documentation
 
